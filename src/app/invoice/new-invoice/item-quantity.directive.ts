@@ -25,7 +25,7 @@ export class ItemQuantityDirective implements OnInit {
         });
     }
     private testFunc(){
-        alert('oks');
+        //alert('oks');
         this.stopSort.emit();
     }
     ngOnInit(){
