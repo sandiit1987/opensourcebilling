@@ -1,0 +1,151 @@
+<div class="row">
+       <div class="col-sm-7 form-horizontal">
+          <div class="form-group">
+             <label class="col-sm-2 control-label">Company<span>*</span></label>
+             <div class="col-sm-10">
+                <input type="text" class="form-control" value=""  placeholder="" disabled [(ngModel)]="invoiceFormData.company">
+                <small>company for this invoice</small>
+             </div>
+          </div>
+          <div class="form-group">
+             <label class="col-sm-2 control-label">Client<span>*</span></label>
+             <div class="col-sm-10">
+                 <select data-placeholder="Select a client" class="chosen-select-deselect" chosen>
+                   <option value=""></option>
+                   <option *ngFor="let client of clients" value="{{client.id}}">{{client.name}}</option>
+                 </select>
+
+                <small>client you want to send invoice</small>
+             </div>
+          </div>
+          <div class="form-group">
+             <label class="col-sm-2 control-label">Terms<span>*</span></label>
+             <div class="col-sm-10">
+                 <select data-placeholder="Select a payment type" class="chosen-select-deselect" chosen>
+                   <option value=""></option>
+                   <option *ngFor="let term of terms" value="{{term.id}}">{{term.title}}</option>
+                 </select>
+                <small>client you want to send invoice</small>
+             </div>
+          </div>
+       </div>
+       <div class="col-sm-5 form-horizontal">
+          <div class="form-group">
+             <label class="col-sm-4 control-label">Invoice #<span>*</span></label>
+             <div class="col-sm-8">
+                <input type="text" class="form-control"  placeholder="" [(ngModel)]="invoiceFormData.invoiceNumber" readonly>
+                <small>Auto Generated</small>
+             </div>
+          </div>
+          <div class="form-group">
+             <label class="col-sm-4 control-label">Invoice Date<span>*</span></label>
+             <div class="col-sm-8">
+                <input type="text" class="form-control"  placeholder="" invoiceDatepicker value="{{ invoiceFormData.invoiceDate }}" readonly>
+             </div>
+          </div>
+          <div class="form-group">
+             <label class="col-sm-4 control-label">Due date<span>*</span></label>
+             <div class="col-sm-8">
+                <input type="text" class="form-control"  placeholder="" invoiceDatepicker readonly>
+             </div>
+          </div>
+       </div>
+</div>
+<div class="row billing-item-section">
+
+   <div class="col-sm-12">
+
+      <div class="table-responsive">
+         <table class="table">
+            <thead>
+               <tr>
+                  <th>&nbsp;</th>
+                  <th>Item</th>
+                  <th>Description</th>
+                  <th>Unit Cost</th>
+                  <th>Qty</th>
+                  <!--<th>Tax1</th>
+                  <th>Tax2</th>-->
+                  <th>Line Total</th>
+               </tr>
+            </thead>
+            <tbody id="sortable" class="invoice-items" sortable>
+                <tr class="ui-state-default">
+                   <td>
+                     <div class="icon-action">
+                      <a  href="javascript:void(0)" deleteSortable><img src="assets/images/close.png" alt=""></a>
+                      <a  href="javascript:void(0)"><img src="assets/images/sort.png" alt=""></a>
+                      </div>
+                   </td>
+                   <td>
+                       <select name="item-id" data-placeholder="Select an item" class="chosen-select-deselect" chosen>
+                         <option value=""></option>
+                         <option *ngFor="let item of items" value="{{item.id}}">{{item.title}}</option>
+                       </select>
+                  </td>
+                   <td><input type="text" name="item-description" value="" class="form-control"></td>
+                   <td><input type="text" name="item-unit-cost" value="" itemUnitCost class="form-control"></td>
+                   <td><input type="text" name="item-qty" value="" itemQuantity class="form-control"></td>
+
+                   <td>
+                     <input type="text" name="item-cost" class="form-control" value="" readonly>
+                   </td>
+                </tr>
+                <template #clone>
+                    <tr class="ui-state-default">
+                       <td>
+                         <div class="icon-action">
+                          <a  href="javascript:void(0)" deleteSortable><img src="assets/images/close.png" alt=""></a>
+                          <a  href="javascript:void(0)"><img src="assets/images/sort.png" alt=""></a>
+                          </div>
+                       </td>
+                       <td>
+                           <select name="item-id" data-placeholder="Select an item" class="chosen-select-deselect" chosen>
+                             <option value=""></option>
+                             <option *ngFor="let item of items" value="{{item.id}}">{{item.title}}</option>
+                           </select>
+                      </td>
+                       <td><input type="text" name="item-description" value=""  class="form-control"></td>
+                       <td><input type="text" name="item-unit-cost" value="" itemUnitCost class="form-control"></td>
+                       <td><input type="text" name="item-qty" value="" itemQuantity (stopSort)="stopSortingEvent()" class="form-control"></td>
+
+                       <td>
+                         <input type="text" name="item-cost" class="form-control" value="" readonly>
+                       </td>
+                    </tr>
+
+                </template>
+                <template #container></template>
+            </tbody>
+         </table>
+         <pre>
+         {{invoiceFormData | json}}
+        </pre>
+      </div>
+      <a class="btn btn-primary line-btn" id="save-invoice" href="javascript:void(0)" (click)="cloneTemplate()">Add Line Item</a>
+   </div>
+   <div class="col-sm-7 col-md-8 col-xs-12"></div>
+   <div class="col-sm-5 col-md-4  col-xs-12float-right">
+     <div class="gridsummary-table">
+       <ul>
+         <li>subtotal <span id="cost-subtotal">$0.00</span></li>
+         <li>
+           <div class="discount">
+              Discount
+              <select id="discount-option" class="chosen-select-deselect without-search" chosen>
+                <option value="percent" selected>%</option>
+                <option value="dollar">$</option>
+              </select>
+           </div>
+           <input type="text" class="form-control" name="" id="discount-value" value="">
+         </li>
+         <li>
+           <div class="net-total">
+           <strong>Net total</strong>
+             <span id="item-net-total">$0.00</span>
+           </div>
+         </li>
+       </ul>
+     </div>
+   </div>
+</div>
