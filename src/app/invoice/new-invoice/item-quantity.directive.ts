@@ -6,8 +6,7 @@ declare var jQuery: any;
 export class ItemQuantityDirective implements OnInit {
 
     private elementRef: ElementRef;
-    //@Output() triggerEventEmitter:EventEmitter<any> = new EventEmitter();
-    @Output() stopSort:EventEmitter<any> = new EventEmitter();
+    @Output() triggerEventEmitter = new EventEmitter();
     constructor(elementRef: ElementRef) {
         this.elementRef = elementRef;
         var self = this;
@@ -16,18 +15,18 @@ export class ItemQuantityDirective implements OnInit {
             var totalRows = jQuery('.billing-item-section table tbody tr').length;
             var currentRowNumber = jQuery(this).closest('tr').index() + 1;
             if(currentRowNumber == totalRows){
-                //console.log(jQuery('#save-invoice').attr('id'));
-                //jQuery('#save-invoice').click();
-                console.log('khokho');
-                self.testFunc();
-                //self.triggerEventEmitter.emit("trigger");
+                self.triggerEventEmitter.emit("triggerClickAddItem");
+            }
+        });
+        jQuery(this.elementRef.nativeElement).on('keypress', function(e){
+            var totalRows = jQuery('.billing-item-section table tbody tr').length;
+            var currentRowNumber = jQuery(this).closest('tr').index() + 1;
+            if(currentRowNumber == totalRows){
+                self.triggerEventEmitter.emit("triggerClickAddItem");
             }
         });
     }
-    private testFunc(){
-        //alert('oks');
-        this.stopSort.emit();
-    }
+
     ngOnInit(){
 
 
