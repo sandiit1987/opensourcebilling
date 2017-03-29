@@ -16,6 +16,7 @@ import { ItemUnitCostDirective } from './invoice/new-invoice/item-unit-cost.dire
 import { ItemQuantityDirective } from './invoice/new-invoice/item-quantity.directive';
 import { InvoiceDetailComponent } from './invoice/invoice-detail/invoice-detail.component';
 import { ItemDiscountDirective } from './invoice/new-invoice/item-discount.directive';
+import { DefaultValueService } from './invoice/new-invoice/default-value.service';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,7 @@ import { ItemDiscountDirective } from './invoice/new-invoice/item-discount.direc
     FormsModule,
     HttpModule
   ],
-  providers: [],
+  providers: [DefaultValueService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

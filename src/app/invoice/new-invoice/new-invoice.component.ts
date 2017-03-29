@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, ViewChild, ViewContainerRef, TemplateRef, ComponentFactoryResolver, EventEmitter } from '@angular/core';
+import { DefaultValueService } from './default-value.service';
 declare var jQuery: any;
 @Component({
   selector: 'osb-new-invoice',
@@ -14,96 +15,10 @@ export class NewInvoiceComponent {
     @Output() passingTermData = new EventEmitter();
     @Output() passingItemData = new EventEmitter();
 
-    invoiceFormData = {
-        company: 'Demo Company',
-        invoiceNumber: 1234,
-        client: null,
-        invoiceDate: this.getCurrentFormattedDate(),
-        term: null,
-        dueDate: null,
-        items: [],
-        subTotal: 0,
-        discountOption: 0,
-        discountValue: 0,
-        netTotal: 0,
-        notes: ""
-    }
-    clients = [
-            {
-                id: 1,
-                name: 'John',
-                company: 'TCS',
-                address: 'Kolkata'
-            },
-            {
-                id: 2,
-                name: 'Jason',
-                company: 'CTS',
-                address: 'Kolkata'
-            },
-            {
-                id: 3,
-                name: 'Sandip',
-                company: 'DAT',
-                address: 'Kolkata'
-            },
-            {
-                id: 4,
-                name: 'Sumantra',
-                company: 'TCS',
-                address: 'Kolkata'
-            },
-            {
-                id: 5,
-                name: 'Deep',
-                company: 'TCS',
-                address: 'Kolkata'
-            }
-    ];
-    private terms = [
-            {
-                id: 1,
-                title: 'Annual',
-                description: 'Annual'
-            },
-            {
-                id: 2,
-                title: 'Monthly',
-                description: 'Monthly'
-            },
-            {
-                id: 3,
-                title: 'Twice in month',
-                description: 'Twice in month'
-            }
-    ];
-    private items = [
-            {
-                id: 1,
-                title: 'Samsung',
-                description: 'Samsung'
-            },
-            {
-                id: 2,
-                title: 'Nokia',
-                description: 'Nokia'
-            },
-            {
-                id: 3,
-                title: 'Sony',
-                description: 'Sony'
-            },
-            {
-                id: 4,
-                title: 'One plus',
-                description: 'One plus'
-            },
-            {
-                id: 5,
-                title: 'Moto',
-                description: 'Moto'
-            }
-    ];
+    private invoiceFormData;
+    private clients: Object[];
+    private terms: Object[];
+    private items: Object[];
 
 
     private getCurrentFormattedDate(){
@@ -121,7 +36,13 @@ export class NewInvoiceComponent {
          return today;
     }
 
-    constructor(private resolver:ComponentFactoryResolver){}
+    constructor(private resolver:ComponentFactoryResolver, private defaultValueService: DefaultValueService){
+        //console.log(defaultValueService.getInvoiceFormData());
+        this.invoiceFormData = defaultValueService.getInvoiceFormData();
+        this.clients = defaultValueService.getClients();
+        this.terms = defaultValueService.getTerms();
+        this.items = defaultValueService.getItems();
+    }
 
 	triggerEventEmitterAddRow(){
 		this.cloneTemplate();
