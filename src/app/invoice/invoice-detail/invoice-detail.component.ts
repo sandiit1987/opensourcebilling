@@ -10,13 +10,14 @@ export class InvoiceDetailComponent implements OnInit {
   @Input() clients: Object;
   @Input() terms: Object;
   @Input() items: Object;
+  @Input() taxData: Object;
 
   private selectedClient;
 
   constructor() { }
 
   ngOnInit() {
-      
+
   }
 
 }

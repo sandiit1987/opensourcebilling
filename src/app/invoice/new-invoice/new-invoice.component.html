@@ -1,6 +1,6 @@
 <div class="row">
         <h1 class="invoice-heading">
-            OpenSourceBilling
+            New Invoice
         </h1>
        <div class="col-sm-7 form-horizontal">
           <div class="form-group">
@@ -43,13 +43,13 @@
           <div class="form-group">
              <label class="col-sm-4 control-label">Invoice Date<span>*</span></label>
              <div class="col-sm-8">
-                <input type="text" class="form-control"  placeholder="" invoiceDatepicker value="{{ invoiceFormData.invoiceDate }}" readonly>
+                <input type="text" class="form-control"  placeholder="" invoiceDatepicker value="{{ invoiceFormData.invoiceDate }}">
              </div>
           </div>
           <div class="form-group">
              <label class="col-sm-4 control-label">Due date<span>*</span></label>
              <div class="col-sm-8">
-                <input type="text" class="form-control" name="due-date"  placeholder="" invoiceDatepicker readonly>
+                <input type="text" class="form-control" name="due-date"  placeholder="" invoiceDatepicker>
              </div>
           </div>
        </div>
@@ -67,8 +67,7 @@
                   <th>Description</th>
                   <th>Unit Cost</th>
                   <th>Qty</th>
-                  <!--<th>Tax1</th>
-                  <th>Tax2</th>-->
+                  <th>Tax</th>
                   <th>Line Total</th>
                </tr>
             </thead>
@@ -87,9 +86,14 @@
                        </select>
                   </td>
                    <td><input type="text" name="item-description" value="" class="form-control"></td>
-                   <td><input type="text" name="item-unit-cost" value="" itemUnitCost class="form-control"></td>
-                   <td><input type="text" name="item-qty" value="" itemQuantity (triggerEventEmitter)="triggerEventEmitterAddRow()" class="form-control"></td>
-
+                   <td><input type="text" name="item-unit-cost" [value]="defaultUnitPrice" itemUnitCost class="form-control"></td>
+                   <td><input type="text" name="item-qty" itemQuantity (triggerEventEmitter)="triggerEventEmitterAddRow()" class="form-control" [value]="defaultQuantity"></td>
+                   <td>
+                       <select name="tax-id" data-placeholder="Select tax" class="chosen-select-deselect" chosen>
+                         <option value=""></option>
+                         <option *ngFor="let tax of taxData" value="{{tax.id}}">{{tax.name}}</option>
+                       </select>
+                   </td>
                    <td>
                      <input type="text" name="item-cost" class="form-control" value="" readonly>
                    </td>
@@ -109,9 +113,14 @@
                            </select>
                       </td>
                        <td><input type="text" name="item-description" value=""  class="form-control"></td>
-                       <td><input type="text" name="item-unit-cost" value="" itemUnitCost class="form-control"></td>
-                       <td><input type="text" name="item-qty" value="" itemQuantity (triggerEventEmitter)="triggerEventEmitterAddRow()" class="form-control"></td>
-
+                       <td><input type="text" name="item-unit-cost" [value]="defaultUnitPrice" itemUnitCost class="form-control"></td>
+                       <td><input type="text" name="item-qty" itemQuantity (triggerEventEmitter)="triggerEventEmitterAddRow()" class="form-control" [value]="defaultQuantity"></td>
+                       <td>
+                           <select name="tax-id" data-placeholder="Select tax" class="chosen-select-deselect" chosen>
+                             <option value=""></option>
+                             <option *ngFor="let tax of taxData" value="{{tax.id}}">{{tax.name}}</option>
+                           </select>
+                       </td>
                        <td>
                          <input type="text" name="item-cost" class="form-control" value="" readonly>
                        </td>

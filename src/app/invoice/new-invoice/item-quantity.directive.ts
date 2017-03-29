@@ -12,17 +12,33 @@ export class ItemQuantityDirective implements OnInit {
         var self = this;
         //this.triggerEventEmitter.emit("trigger");
         jQuery(this.elementRef.nativeElement).on('blur', function(){
+            console.log("Blur");
             var totalRows = jQuery('.billing-item-section table tbody tr').length;
             var currentRowNumber = jQuery(this).closest('tr').index() + 1;
             if(currentRowNumber == totalRows){
-                self.triggerEventEmitter.emit("triggerClickAddItem");
+                var itemDescription = jQuery(this).closest('tr').find('input[name=item-description]').val();
+                var itemUnitCost = jQuery(this).closest('tr').find('input[name=item-unit-cost]').val();
+                var itemQty = jQuery(this).closest('tr').find('input[name=item-qty]').val();
+                if(itemDescription != "" && itemUnitCost != "" && itemQty != ""){
+                    self.triggerEventEmitter.emit("triggerClickAddItem");
+                }
+
             }
         });
         jQuery(this.elementRef.nativeElement).on('keypress', function(e){
             var totalRows = jQuery('.billing-item-section table tbody tr').length;
             var currentRowNumber = jQuery(this).closest('tr').index() + 1;
             if(currentRowNumber == totalRows){
-                self.triggerEventEmitter.emit("triggerClickAddItem");
+                var keycode = (e.keyCode ? e.keyCode : e.which);
+                console.log(keycode);
+                if(keycode == 13){
+                    var itemDescription = jQuery(this).closest('tr').find('input[name=item-description]').val();
+                    var itemUnitCost = jQuery(this).closest('tr').find('input[name=item-unit-cost]').val();
+                    var itemQty = jQuery(this).closest('tr').find('input[name=item-qty]').val();
+                    if(itemDescription != "" && itemUnitCost != "" && itemQty != ""){
+                        self.triggerEventEmitter.emit("triggerClickAddItem");
+                    }
+                }
             }
         });
     }

@@ -9,6 +9,7 @@ export class InvoiceComponent{
     private clients: Object;
     private terms: Object;
     private items: Object;
+    private taxData: Object;
     getPassingInvoiceData(data: Object){
         //console.log("Received");
         //console.log(data);
@@ -22,5 +23,8 @@ export class InvoiceComponent{
     }
     getPassingItemData(items: Object){
         this.items = items;
+    }
+    getPassingTaxData(taxData: Object){
+        this.taxData = taxData;
     }
 }

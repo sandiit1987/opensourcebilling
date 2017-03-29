@@ -96,3 +96,9 @@ textarea.form-control {
 .chosen-container-single .chosen-single abbr{
     top: 10px !important;
 }
+input[name=item-unit-cost], input[name=item-cost]{
+    text-align: right;
+}
+#discount-value{
+    text-align: right;
+}

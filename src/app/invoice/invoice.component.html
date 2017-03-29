@@ -1,8 +1,8 @@
 <div class="main_container">
     <div class="invoice-wrapper">
-        <osb-new-invoice (passingInvoiceData)="getPassingInvoiceData($event)" (passingClientData)="getPassingClientData($event)" (passingTermData)="getPassingTermData($event)" (passingItemData)="getPassingItemData($event)" *ngIf="!invoiceData"></osb-new-invoice>
+        <osb-new-invoice (passingInvoiceData)="getPassingInvoiceData($event)" (passingClientData)="getPassingClientData($event)" (passingTermData)="getPassingTermData($event)" (passingItemData)="getPassingItemData($event)" (passingTaxData)="getPassingTaxData($event)" *ngIf="!invoiceData"></osb-new-invoice>
     </div>
     <div>
-        <osb-invoice-detail [invoiceData]="invoiceData" [clients]="clients" [terms]="terms" [items]="items" *ngIf="invoiceData"></osb-invoice-detail>
+        <osb-invoice-detail [invoiceData]="invoiceData" [clients]="clients" [terms]="terms" [items]="items" [taxData]="taxData" *ngIf="invoiceData"></osb-invoice-detail>
     </div>
 </div>

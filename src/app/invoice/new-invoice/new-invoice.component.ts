@@ -14,27 +14,15 @@ export class NewInvoiceComponent {
     @Output() passingClientData = new EventEmitter();
     @Output() passingTermData = new EventEmitter();
     @Output() passingItemData = new EventEmitter();
+    @Output() passingTaxData = new EventEmitter();
 
     private invoiceFormData;
     private clients: Object[];
     private terms: Object[];
     private items: Object[];
-
-
-    private getCurrentFormattedDate(){
-         var today: any = new Date();
-         var dd = today.getDate();
-         var mm = today.getMonth()+1; //January is 0!
-         var yyyy = today.getFullYear();
-         if(dd<10) {
-             dd='0'+dd
-         }
-         if(mm<10) {
-             mm='0'+mm
-         }
-         today = dd+'/'+mm+'/'+yyyy;
-         return today;
-    }
+    private taxData: Object[];
+    private defaultQuantity: Number;
+    private defaultUnitPrice;
 
     constructor(private resolver:ComponentFactoryResolver, private defaultValueService: DefaultValueService){
         //console.log(defaultValueService.getInvoiceFormData());
@@ -42,6 +30,10 @@ export class NewInvoiceComponent {
         this.clients = defaultValueService.getClients();
         this.terms = defaultValueService.getTerms();
         this.items = defaultValueService.getItems();
+        this.taxData = defaultValueService.getTaxData();
+        this.defaultQuantity = defaultValueService.defaultQuantity;
+        this.defaultUnitPrice = defaultValueService.defaultUnitPrice.toFixed(2);
+
     }
 
 	triggerEventEmitterAddRow(){
@@ -57,11 +49,13 @@ export class NewInvoiceComponent {
         self.invoiceFormData.term = jQuery("select[name=term-id]").val();
         self.invoiceFormData.dueDate = jQuery("input[name=due-date]").val();
         jQuery('.invoice-items tr').each(function(){
+            //console.log(jQuery(this).find('select[name=tax-id]').val());
             var itemObject = {
                 itemId: jQuery(this).find('select[name=item-id]').val(),
                 itemDescription: jQuery(this).find('input[name=item-description]').val(),
                 itemUnitCost: jQuery(this).find('input[name=item-unit-cost]').val(),
                 itemQty: jQuery(this).find('input[name=item-qty]').val(),
+                taxId: jQuery(this).find('select[name=tax-id]').val(),
                 rowCost: jQuery(this).find('input[name=item-cost]').val()
             };
             self.invoiceFormData.items.push(itemObject);
@@ -75,6 +69,7 @@ export class NewInvoiceComponent {
         self.passingClientData.emit(self.clients);
         self.passingTermData.emit(self.terms);
         self.passingItemData.emit(self.items);
+        self.passingTaxData.emit(self.taxData);
 	}
     listenDiscountOptionEvent(discountOption: String){
         //console.log(discountOption+"OK");

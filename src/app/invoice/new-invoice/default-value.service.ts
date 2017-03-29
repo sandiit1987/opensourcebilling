@@ -4,6 +4,9 @@ export class DefaultValueService {
     private clients: Object[] = [];
     private terms: Object[] = [];
     private items: Object[] = [];
+    private taxData: Object[] = [];
+    public defaultQuantity = 1;
+    public defaultUnitPrice = 0;
 
     public getInvoiceFormData(){
         return this.invoiceFormData = {
@@ -101,6 +104,35 @@ export class DefaultValueService {
                 title: 'Moto',
                 description: 'Moto'
             }
+        ];
+    }
+    public getTaxData(){
+        return [
+                {
+                    id: 1,
+                    name: 'Zero',
+                    value: 0
+                },
+                {
+                    id: 2,
+                    name: 'IVA',
+                    value: 22
+                },
+                {
+                    id: 3,
+                    name: 'TVA',
+                    value: 33
+                },
+                {
+                    id: 4,
+                    name: 'GST',
+                    value: 15
+                },
+                {
+                    id: 5,
+                    name: 'Lux VAT',
+                    value: 17
+                }
         ];
     }
     private getCurrentFormattedDate(){

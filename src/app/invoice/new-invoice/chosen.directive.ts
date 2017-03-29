@@ -12,6 +12,7 @@ export class ChosenDirective implements AfterViewInit{
     }
 
     ngAfterViewInit(){
+        //console.log(this.selectedVal);
         var self = this;
         if(jQuery(this.elementRef.nativeElement).hasClass('without-search')){
             jQuery(this.elementRef.nativeElement).chosen({allow_single_deselect:true, "disable_search": true, width: '60px'}).change(function(){
@@ -24,6 +25,7 @@ export class ChosenDirective implements AfterViewInit{
             }
         }
         else{
+
             jQuery(this.elementRef.nativeElement).chosen({allow_single_deselect:true, width: '100%'});
             //console.log(this.selectedVal);
             if(self.selectedVal != undefined){

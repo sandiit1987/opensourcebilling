@@ -1,6 +1,6 @@
 <div class="row">
         <h1 class="invoice-heading">
-            OpenSourceBilling
+            New Invoice
         </h1>
        <div class="col-sm-7 form-horizontal">
           <div class="form-group">
@@ -67,8 +67,7 @@
                   <th>Description</th>
                   <th>Unit Cost</th>
                   <th>Qty</th>
-                  <!--<th>Tax1</th>
-                  <th>Tax2</th>-->
+                  <th>Tax</th>
                   <th>Line Total</th>
                </tr>
             </thead>
@@ -89,7 +88,13 @@
                    <td><input type="text" name="item-description" value="{{invoiceItem.itemDescription}}" readonly class="form-control"></td>
                    <td><input type="text" name="item-unit-cost" value="{{invoiceItem.itemUnitCost}}" readonly itemUnitCost class="form-control"></td>
                    <td><input type="text" name="item-qty" value="{{invoiceItem.itemQty}}" readonly itemQuantity (triggerEventEmitter)="triggerEventEmitterAddRow()" class="form-control"></td>
+                   <td>
 
+                       <select name="tax-id" data-placeholder="Select tax" class="chosen-select-deselect" [selectedVal]="invoiceItem.taxId" chosen disabled>
+                         <option value=""></option>
+                         <option *ngFor="let tax of taxData" value="{{tax.id}}">{{tax.name}}</option>
+                       </select>
+                   </td>
                    <td>
                      <input type="text" name="item-cost" class="form-control" value="{{invoiceItem.rowCost}}" readonly>
                    </td>
