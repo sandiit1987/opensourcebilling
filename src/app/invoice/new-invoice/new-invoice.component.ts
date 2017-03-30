@@ -55,6 +55,8 @@ export class NewInvoiceComponent {
                 itemDescription: jQuery(this).find('input[name=item-description]').val(),
                 itemUnitCost: jQuery(this).find('input[name=item-unit-cost]').val(),
                 itemQty: jQuery(this).find('input[name=item-qty]').val(),
+                itemDiscount: jQuery(this).find('input[name=item-discount]').val(),
+                itemDiscountPercentage: jQuery(this).find('input[name=item-discount]').parent().find('span').html(),
                 taxId: jQuery(this).find('select[name=tax-id]').val(),
                 rowCost: jQuery(this).find('input[name=item-cost]').val()
             };
@@ -71,28 +73,5 @@ export class NewInvoiceComponent {
         self.passingItemData.emit(self.items);
         self.passingTaxData.emit(self.taxData);
 	}
-    listenDiscountOptionEvent(discountOption: String){
-        //console.log(discountOption+"OK");
-        var totalCost: any = 0;
-        jQuery('.invoice-items').find('input[name=item-cost]').each(function(){
-            var rowCost = jQuery(this).val();
-            if(rowCost == ""){
-                rowCost = 0;
-            }
-            totalCost = parseFloat(totalCost) + parseFloat(rowCost);
-        });
-        //console.log(totalCost);
-        var discountVal = jQuery('#discount-value').val();
-        if(discountVal == ""){
-            discountVal = 0;
-        }
-        if(discountOption == "percent"){
-            totalCost = totalCost - ((discountVal / 100) * totalCost);
-        }
-        else{
-            totalCost = totalCost - discountVal;
-        }
-        totalCost = totalCost.toFixed(2);
-        jQuery('#item-net-total').html("$"+totalCost);
-    }
+
 }

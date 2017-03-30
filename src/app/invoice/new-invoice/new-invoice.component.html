@@ -64,9 +64,10 @@
                <tr>
                   <th>&nbsp;</th>
                   <th>Item</th>
-                  <th>Description</th>
-                  <th>Unit Cost</th>
-                  <th>Qty</th>
+                  <th width="250">Description</th>
+                  <th width="80">Unit Cost</th>
+                  <th width="70">Qty</th>
+                  <th width="130">Discount</th>
                   <th>Tax</th>
                   <th>Line Total</th>
                </tr>
@@ -89,7 +90,11 @@
                    <td><input type="text" name="item-unit-cost" [value]="defaultUnitPrice" itemUnitCost class="form-control"></td>
                    <td><input type="text" name="item-qty" itemQuantity (triggerEventEmitter)="triggerEventEmitterAddRow()" class="form-control" [value]="defaultQuantity"></td>
                    <td>
-                       <select name="tax-id" data-placeholder="Select tax" class="chosen-select-deselect" chosen>
+                       <input type="text" name="item-discount" value="" class="form-control item-discount" itemDiscount>
+                       <span class="discount-percent">11.00%</span>
+                   </td>
+                   <td>
+                       <select name="tax-id" data-placeholder="No tax" class="chosen-select-deselect without-search" chosen>
                          <option value=""></option>
                          <option *ngFor="let tax of taxData" value="{{tax.id}}">{{tax.name}}</option>
                        </select>
@@ -116,7 +121,11 @@
                        <td><input type="text" name="item-unit-cost" [value]="defaultUnitPrice" itemUnitCost class="form-control"></td>
                        <td><input type="text" name="item-qty" itemQuantity (triggerEventEmitter)="triggerEventEmitterAddRow()" class="form-control" [value]="defaultQuantity"></td>
                        <td>
-                           <select name="tax-id" data-placeholder="Select tax" class="chosen-select-deselect" chosen>
+                           <input type="text" name="item-discount" value="" class="form-control item-discount" itemDiscount>
+                           <span class="discount-percent"></span>
+                       </td>
+                       <td>
+                           <select name="tax-id" data-placeholder="No tax" class="chosen-select-deselect without-search" chosen>
                              <option value=""></option>
                              <option *ngFor="let tax of taxData" value="{{tax.id}}">{{tax.name}}</option>
                            </select>
@@ -140,17 +149,17 @@
    <div class="col-sm-5 col-md-4  col-xs-12float-right">
      <div class="gridsummary-table">
        <ul>
-         <li>subtotal <span id="cost-subtotal">$0.00</span></li>
+         <!--<li>subtotal <span id="cost-subtotal">$0.00</span></li>
          <li>
            <div class="discount">
               Discount
-              <select id="discount-option" class="chosen-select-deselect without-search" chosen (discountOptionEvent)="listenDiscountOptionEvent($event)">
+              <select id="discount-option" class="chosen-select-deselect " chosen (discountOptionEvent)="listenDiscountOptionEvent($event)">
                 <option value="percent" selected>%</option>
                 <option value="dollar">USD</option>
               </select>
            </div>
-           <input type="text" class="form-control" name="" id="discount-value" [(ngModel)]="invoiceFormData.discountValue" itemDiscount>
-         </li>
+           <input type="text" class="form-control" name="" id="discount-value" [(ngModel)]="invoiceFormData.discountValue">
+       </li>-->
          <li>
            <div class="net-total">
            <strong>Net total</strong>

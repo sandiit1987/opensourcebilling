@@ -8,8 +8,6 @@ export class DeleteSortableDirective implements OnInit{
     private elementRef: ElementRef;
     constructor(elementRef: ElementRef) {
         this.elementRef = elementRef;
-    }
-    ngOnInit(){
         jQuery(this.elementRef.nativeElement).on('click', function(){
             jQuery(this).parent().parent().parent().remove();
             var totalCost: any = 0;
@@ -21,22 +19,11 @@ export class DeleteSortableDirective implements OnInit{
                 totalCost = parseFloat(totalCost) + parseFloat(rowCost);
             });
             totalCost = totalCost.toFixed(2);
-            jQuery('#cost-subtotal').html("$"+totalCost);
-            var discountOption = jQuery("#discount-option").val();
-            var discountVal = jQuery('#discount-value').val();
-            if(discountVal == ""){
-                discountVal = 0;
-            }
-            if(discountOption == "percent"){
-                totalCost = totalCost - ((discountVal / 100) * totalCost);
-            }
-            else{
-                totalCost = totalCost - discountVal;
-            }
-            //console.log(totalCost);
-            totalCost = totalCost.toFixed(2);
-            jQuery('#item-net-total').html("$"+totalCost);
+            jQuery("#item-net-total").html("$"+totalCost);
         });
+    }
+    ngOnInit(){
+
     }
 
 }

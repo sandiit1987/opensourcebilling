@@ -62,13 +62,14 @@
          <table class="table">
             <thead>
                <tr>
-                  <th>&nbsp;</th>
-                  <th>Item</th>
-                  <th>Description</th>
-                  <th>Unit Cost</th>
-                  <th>Qty</th>
-                  <th>Tax</th>
-                  <th>Line Total</th>
+                   <th>&nbsp;</th>
+                   <th>Item</th>
+                   <th width="250">Description</th>
+                   <th width="80">Unit Cost</th>
+                   <th width="70">Qty</th>
+                   <th width="130">Discount</th>
+                   <th>Tax</th>
+                   <th>Line Total</th>
                </tr>
             </thead>
             <tbody id="sortable" class="invoice-items" sortable>
@@ -89,8 +90,12 @@
                    <td><input type="text" name="item-unit-cost" value="{{invoiceItem.itemUnitCost}}" readonly itemUnitCost class="form-control"></td>
                    <td><input type="text" name="item-qty" value="{{invoiceItem.itemQty}}" readonly itemQuantity (triggerEventEmitter)="triggerEventEmitterAddRow()" class="form-control"></td>
                    <td>
+                       <input type="text" name="item-discount" value="{{invoiceItem.itemDiscount}}" class="form-control item-discount" itemDiscount readonly>
+                       <span class="discount-percent">{{invoiceItem.itemDiscountPercentage}}</span>
+                   </td>
+                   <td>
 
-                       <select name="tax-id" data-placeholder="Select tax" class="chosen-select-deselect" [selectedVal]="invoiceItem.taxId" chosen disabled>
+                       <select name="tax-id" data-placeholder="No tax" class="chosen-select-deselect" [selectedVal]="invoiceItem.taxId" chosen disabled>
                          <option value=""></option>
                          <option *ngFor="let tax of taxData" value="{{tax.id}}">{{tax.name}}</option>
                        </select>
@@ -111,7 +116,7 @@
    <div class="col-sm-5 col-md-4  col-xs-12float-right">
      <div class="gridsummary-table">
        <ul>
-         <li>subtotal <span id="cost-subtotal">{{invoiceData.subTotal}}</span></li>
+         <!--<li>subtotal <span id="cost-subtotal">{{invoiceData.subTotal}}</span></li>
          <li>
            <div class="discount">
               Discount
@@ -121,7 +126,7 @@
               </select>
            </div>
            <input type="text" class="form-control" name="" id="discount-value" value="{{invoiceData.discountValue}}" readonly>
-         </li>
+       </li>-->
          <li>
            <div class="net-total">
            <strong>Net total</strong>
