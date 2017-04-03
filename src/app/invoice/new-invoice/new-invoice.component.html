@@ -1,6 +1,7 @@
 <div class="row">
         <h1 class="invoice-heading">
             New Invoice
+
         </h1>
        <div class="col-sm-7 form-horizontal">
           <div class="form-group">
@@ -81,26 +82,27 @@
                       </div>
                    </td>
                    <td>
-                       <select name="item-id" data-placeholder="Select an item" class="chosen-select-deselect" chosen>
+                       <select name="item-id" data-placeholder="Select an item" class="chosen-select-deselect nextInputFocus" chosen>
                          <option value=""></option>
                          <option *ngFor="let item of items" value="{{item.id}}">{{item.title}}</option>
                        </select>
+
                   </td>
-                   <td><input type="text" name="item-description" value="" class="form-control"></td>
-                   <td><input type="text" name="item-unit-cost" [value]="defaultUnitPrice" itemUnitCost class="form-control"></td>
-                   <td><input type="text" name="item-qty" itemQuantity (triggerEventEmitter)="triggerEventEmitterAddRow()" class="form-control" [value]="defaultQuantity"></td>
+                   <td><input type="text" name="item-description" value="" class="form-control nextInputFocus"></td>
+                   <td><input type="text" name="item-unit-cost" [value]="defaultUnitPrice" itemUnitCost class="form-control nextInputFocus"></td>
+                   <td><input type="text" name="item-qty" itemQuantity (triggerEventEmitter)="triggerEventEmitterAddRow()" class="form-control nextInputFocus" [value]="defaultQuantity"></td>
                    <td>
-                       <input type="text" name="item-discount" value="" class="form-control item-discount" itemDiscount>
-                       <span class="discount-percent">11.00%</span>
+                       <input type="text" name="item-discount" value="" class="form-control item-discount nextInputFocus" itemDiscount>
+                       <span class="discount-percent"></span>
                    </td>
                    <td>
-                       <select name="tax-id" data-placeholder="No tax" class="chosen-select-deselect without-search" chosen>
+                       <select name="tax-id" data-placeholder="No tax" class="chosen-select-deselect without-search nextInputFocus" chosen>
                          <option value=""></option>
                          <option *ngFor="let tax of taxData" value="{{tax.id}}">{{tax.name}}</option>
                        </select>
                    </td>
                    <td>
-                     <input type="text" name="item-cost" class="form-control" value="" readonly>
+                     <input type="text" name="item-cost" class="form-control nextInputFocus" value="" >
                    </td>
                 </tr>
                 <template #clone>
@@ -112,26 +114,26 @@
                           </div>
                        </td>
                        <td>
-                           <select name="item-id" data-placeholder="Select an item" class="chosen-select-deselect" chosen>
+                           <select name="item-id" data-placeholder="Select an item" class="chosen-select-deselect nextInputFocus" chosen>
                              <option value=""></option>
                              <option *ngFor="let item of items" value="{{item.id}}">{{item.title}}</option>
                            </select>
                       </td>
-                       <td><input type="text" name="item-description" value=""  class="form-control"></td>
-                       <td><input type="text" name="item-unit-cost" [value]="defaultUnitPrice" itemUnitCost class="form-control"></td>
-                       <td><input type="text" name="item-qty" itemQuantity (triggerEventEmitter)="triggerEventEmitterAddRow()" class="form-control" [value]="defaultQuantity"></td>
+                       <td><input type="text" name="item-description" value=""  class="form-control nextInputFocus"></td>
+                       <td><input type="text" name="item-unit-cost" [value]="defaultUnitPrice" itemUnitCost class="form-control nextInputFocus"></td>
+                       <td><input type="text" name="item-qty" itemQuantity (triggerEventEmitter)="triggerEventEmitterAddRow()" class="form-control nextInputFocus" [value]="defaultQuantity"></td>
                        <td>
-                           <input type="text" name="item-discount" value="" class="form-control item-discount" itemDiscount>
+                           <input type="text" name="item-discount" value="" class="form-control item-discount nextInputFocus" itemDiscount>
                            <span class="discount-percent"></span>
                        </td>
                        <td>
-                           <select name="tax-id" data-placeholder="No tax" class="chosen-select-deselect without-search" chosen>
+                           <select name="tax-id" data-placeholder="No tax" class="chosen-select-deselect without-search nextInputFocus" chosen>
                              <option value=""></option>
                              <option *ngFor="let tax of taxData" value="{{tax.id}}">{{tax.name}}</option>
                            </select>
                        </td>
                        <td>
-                         <input type="text" name="item-cost" class="form-control" value="" readonly>
+                         <input type="text" name="item-cost" class="form-control nextInputFocus" value="" readonly>
                        </td>
                     </tr>
 
@@ -160,6 +162,18 @@
            </div>
            <input type="text" class="form-control" name="" id="discount-value" [(ngModel)]="invoiceFormData.discountValue">
        </li>-->
+        <li>
+             <div class="discount">
+                Discount
+             </div>
+             <input type="text" class="form-control" name="" id="discount-value" readonly value="0">
+        </li>
+        <li>
+             <div class="discount">
+                Tax
+             </div>
+             <input type="text" class="form-control" name="" id="tax-value" readonly value="0">
+        </li>
          <li>
            <div class="net-total">
            <strong>Net total</strong>

@@ -7,9 +7,15 @@ declare var jQuery: any;
 export class ItemDiscountDirective {
     private elementRef: ElementRef;
     constructor(elementRef: ElementRef, private calculateService: CalculateService) {
-        
+
         this.elementRef = elementRef;
-        jQuery(this.elementRef.nativeElement).on('keyup', function(){
+        jQuery(this.elementRef.nativeElement).on('keyup', function(e){
+            var code = e.keyCode || e.which;
+            //console.log(code);
+            var restrictedKeyCodes = new Array(37, 38, 39, 40, 9);
+            if(jQuery.inArray(code, restrictedKeyCodes) != -1){
+                return false;
+            }
             var discountVal = jQuery(this).val();
             var unitCost: any = parseFloat(jQuery(this).parent().parent().find('input[name=item-unit-cost]').val()).toFixed(2);
             if(isNaN(unitCost)){
@@ -28,7 +34,7 @@ export class ItemDiscountDirective {
             else{
                 var discountPercentage = calculateService.getDiscountPercentage(unitCost, qty, discountVal);
                 if(discountPercentage == undefined){
-                    jQuery(this).parent().find('span').html("");
+                    jQuery(this).parent().find('span').html("0.00%");
                 }
                 else{
                     jQuery(this).parent().find('span').html(discountPercentage.toFixed(2)+"%");
@@ -50,6 +56,36 @@ export class ItemDiscountDirective {
             });
             totalCost = totalCost.toFixed(2);
             jQuery("#item-net-total").html("$"+totalCost);
+            /* Total discount calculation */
+            var totalDiscount: any = 0;
+            jQuery('.invoice-items').find('input[name=item-discount]').each(function(){
+                var rowDiscount = jQuery(this).val();
+                if(rowDiscount == ""){
+                    rowDiscount = 0;
+                }
+                totalDiscount = parseFloat(totalDiscount) + parseFloat(rowDiscount);
+            });
+            totalDiscount = totalDiscount.toFixed(2);
+            if(isNaN(totalDiscount)){
+                totalDiscount = 0;
+            }
+            jQuery("#discount-value").val(totalDiscount);
+            /* Total tax calculation */
+            var totalTax: any = 0;
+            jQuery('.invoice-items').find('select[name=tax-id]').each(function(){
+
+                var rowTaxId = jQuery(this).val();
+                var rowItemUnitCost = jQuery(this).closest('tr').find('input[name=item-unit-cost]').val();
+                var rowItemQty = jQuery(this).closest('tr').find('input[name=item-qty]').val();
+                var rowItemDiscount = jQuery(this).closest('tr').find('input[name=item-discount]').val();
+                //console.log(rowItemUnitCost+" "+rowItemQty+" "+rowItemDiscount);
+                var rowTax: any = calculateService.getTaxAmount(rowItemUnitCost, rowItemQty, rowItemDiscount, rowTaxId);
+                totalTax = parseFloat(totalTax) + parseFloat(rowTax);
+            });
+            if(isNaN(totalTax)){
+                totalTax = 0;
+            }
+            jQuery('#tax-value').val(totalTax);
         });
     }
 

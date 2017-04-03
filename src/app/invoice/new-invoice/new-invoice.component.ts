@@ -65,6 +65,8 @@ export class NewInvoiceComponent {
         });
         self.invoiceFormData.subTotal = jQuery('#cost-subtotal').html();
         self.invoiceFormData.discountOption = jQuery('#discount-option').val();
+        self.invoiceFormData.discountValue = jQuery('#discount-value').val();
+        self.invoiceFormData.taxValue = jQuery('#tax-value').val();
         self.invoiceFormData.netTotal = jQuery('#item-net-total').html();
         //console.log(self.invoiceFormData);
         self.passingInvoiceData.emit(self.invoiceFormData);

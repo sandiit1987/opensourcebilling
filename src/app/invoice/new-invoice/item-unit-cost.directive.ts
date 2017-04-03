@@ -48,6 +48,22 @@ export class ItemUnitCostDirective implements OnInit {
             totalCost = totalCost.toFixed(2);
             jQuery("#item-net-total").html("$"+totalCost);
 
+            /* Total tax calculation */
+            var totalTax: any = 0;
+            jQuery('.invoice-items').find('select[name=tax-id]').each(function(){
+
+                var rowTaxId = jQuery(this).val();
+                var rowItemUnitCost = jQuery(this).closest('tr').find('input[name=item-unit-cost]').val();
+                var rowItemQty = jQuery(this).closest('tr').find('input[name=item-qty]').val();
+                var rowItemDiscount = jQuery(this).closest('tr').find('input[name=item-discount]').val();
+                //console.log(rowItemUnitCost+" "+rowItemQty+" "+rowItemDiscount);
+                var rowTax: any = calculateService.getTaxAmount(rowItemUnitCost, rowItemQty, rowItemDiscount, rowTaxId);
+                totalTax = parseFloat(totalTax) + parseFloat(rowTax);
+            });
+            if(isNaN(totalTax)){
+                totalTax = 0;
+            }
+            jQuery('#tax-value').val(totalTax);
         });
     }
     ngOnInit(){

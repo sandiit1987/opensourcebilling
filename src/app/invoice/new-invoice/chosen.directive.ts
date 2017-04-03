@@ -16,7 +16,7 @@ export class ChosenDirective implements AfterViewInit{
         //console.log(this.selectedVal);
         var self = this;
         if(jQuery(this.elementRef.nativeElement).hasClass('without-search')){
-            jQuery(this.elementRef.nativeElement).chosen({allow_single_deselect:true, "disable_search": true, width: '90px'}).change(function(){
+            jQuery(this.elementRef.nativeElement).chosen({allow_single_deselect:true, "disable_search": true, width: '90px', inherit_select_classes: true}).change(function(){
                 var taxId = jQuery(this).val();
                 var discountVal = jQuery(this).closest('tr').find("input[name=item-discount]").val();
                 var unitCost: any = parseFloat(jQuery(this).closest('tr').find('input[name=item-unit-cost]').val()).toFixed(2);
@@ -41,6 +41,23 @@ export class ChosenDirective implements AfterViewInit{
                 });
                 totalCost = totalCost.toFixed(2);
                 jQuery("#item-net-total").html("$"+totalCost);
+
+                /* Total tax calculation */
+                var totalTax: any = 0;
+                jQuery('.invoice-items').find('select[name=tax-id]').each(function(){
+
+                    var rowTaxId = jQuery(this).val();
+                    var rowItemUnitCost = jQuery(this).closest('tr').find('input[name=item-unit-cost]').val();
+                    var rowItemQty = jQuery(this).closest('tr').find('input[name=item-qty]').val();
+                    var rowItemDiscount = jQuery(this).closest('tr').find('input[name=item-discount]').val();
+                    //console.log(rowItemUnitCost+" "+rowItemQty+" "+rowItemDiscount);
+                    var rowTax: any = self.calculateService.getTaxAmount(rowItemUnitCost, rowItemQty, rowItemDiscount, rowTaxId);
+                    totalTax = parseFloat(totalTax) + parseFloat(rowTax);
+                });
+                if(isNaN(totalTax)){ 
+                    totalTax = 0;
+                }
+                jQuery('#tax-value').val(totalTax);
                 //self.discountOptionEvent.emit(discountOption);
             });
             if(self.selectedVal != undefined){
@@ -51,7 +68,7 @@ export class ChosenDirective implements AfterViewInit{
         }
         else{
 
-            jQuery(this.elementRef.nativeElement).chosen({allow_single_deselect:true, width: '100%'});
+            jQuery(this.elementRef.nativeElement).chosen({allow_single_deselect:true, width: '100%', inherit_select_classes: true});
             //console.log(this.selectedVal);
             if(self.selectedVal != undefined){
                 jQuery(this.elementRef.nativeElement).val(self.selectedVal);

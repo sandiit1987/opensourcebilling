@@ -41,7 +41,7 @@ export class CalculateService {
         var costAfterDiscount = (unitCost * qty) - discount;
         var taxValue;
         if(tax != ""){
-            console.log("Not Null");
+            //console.log("Not Null");
             var taxData = this.defaultValueService.getTaxData();
             for (var i=0; i < taxData.length; i++) {
                 //console.log(taxData[i].id);
@@ -53,7 +53,7 @@ export class CalculateService {
         }
         else{
             taxValue = 0;
-            console.log("NULL");
+            //console.log("NULL");
         }
         var taxAmount = (taxValue * costAfterDiscount) / 100;
         var totalAmount = costAfterDiscount + taxAmount;
@@ -63,6 +63,27 @@ export class CalculateService {
         return totalAmount.toFixed(2);
         //console.log(taxValue);
         //console.log(taxAmount);
+    }
+    public getTaxAmount(unitCost: any, qty: any, discount: any, tax: any){
+        var costAfterDiscount = (unitCost * qty) - discount;
+        var taxValue;
+        if(tax != ""){
+            //console.log("Not Null");
+            var taxData = this.defaultValueService.getTaxData();
+            for (var i=0; i < taxData.length; i++) {
+                //console.log(taxData[i].id);
+                if (taxData[i].id == tax) {
+                    taxValue = taxData[i].value;
+                    break;
+                }
+            }
+        }
+        else{
+            taxValue = 0;
+            //console.log("NULL");
+        }
+        var taxAmount = (taxValue * costAfterDiscount) / 100;
+        return taxAmount;
     }
     public percentageExistInDiscountAmount(discount: any){
         var expr = /%/;

@@ -37,8 +37,11 @@ body{
   margin-top: 0px;
 }
 .gridsummary-table ul li {
-  list-style:  none;
-  margin-bottom: 10px;
+    list-style: none;
+    margin-bottom: 10px;
+    clear: both;
+    display: inline-block;
+    width: 100%;
 }
 .gridsummary-table ul li span {
   float: right;
@@ -97,14 +100,14 @@ textarea.form-control {
 .chosen-container-single .chosen-single abbr{
     top: 10px !important;
 }
-input[name=item-unit-cost], input[name=item-cost], input[name=item-qty], input[name=item-discount]{
+input[name=item-unit-cost], input[name=item-cost], input[name=item-qty], input[name=item-discount], #tax-value{
     text-align: right;
 }
 #discount-value{
     text-align: right;
 }
 .item-discount{
-    width: 50px;
+    width: 60px;
     float: left;
 }
 .discount-percent{

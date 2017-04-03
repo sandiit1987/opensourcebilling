@@ -18,6 +18,8 @@ import { InvoiceDetailComponent } from './invoice/invoice-detail/invoice-detail.
 import { ItemDiscountDirective } from './invoice/new-invoice/item-discount.directive';
 import { DefaultValueService } from './invoice/new-invoice/default-value.service';
 import { CalculateService } from './invoice/new-invoice/calculate.service';
+import { NextInputFocusDirective } from './invoice/new-invoice/next-input-focus.directive';
+
 
 @NgModule({
   declarations: [
@@ -32,7 +34,8 @@ import { CalculateService } from './invoice/new-invoice/calculate.service';
     ItemUnitCostDirective,
     ItemQuantityDirective,
     InvoiceDetailComponent,
-    ItemDiscountDirective
+    ItemDiscountDirective,
+    NextInputFocusDirective
   ],
   imports: [
     BrowserModule,
