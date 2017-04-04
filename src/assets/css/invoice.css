@@ -119,3 +119,6 @@ input[name=item-unit-cost], input[name=item-cost], input[name=item-qty], input[n
 .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
     padding: 8px 3px;
 }
+.item-cost {
+    padding: 5px 0;
+}

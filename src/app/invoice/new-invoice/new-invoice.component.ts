@@ -58,7 +58,7 @@ export class NewInvoiceComponent {
                 itemDiscount: jQuery(this).find('input[name=item-discount]').val(),
                 itemDiscountPercentage: jQuery(this).find('input[name=item-discount]').parent().find('span').html(),
                 taxId: jQuery(this).find('select[name=tax-id]').val(),
-                rowCost: jQuery(this).find('input[name=item-cost]').val()
+                rowCost: jQuery(this).find('div.item-cost').html()
             };
             self.invoiceFormData.items.push(itemObject);
 

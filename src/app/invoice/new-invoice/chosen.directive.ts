@@ -28,11 +28,11 @@ export class ChosenDirective implements AfterViewInit{
                     qty = 0;
                 }
                 var lineTotal = self.calculateService.getTotalAmount(unitCost, qty, discountVal, taxId);
-                jQuery(this).closest('tr').find('input[name=item-cost]').val(lineTotal);
+                jQuery(this).closest('tr').find('div.item-cost').html(lineTotal);
 
                 var totalCost: any = 0;
-                jQuery(this).closest('.invoice-items').find('input[name=item-cost]').each(function(){
-                    var rowCost = jQuery(this).val();
+                jQuery(this).closest('.invoice-items').find('div.item-cost').each(function(){
+                    var rowCost = jQuery(this).html();
                     if(rowCost == ""){
                         rowCost = 0;
                     }
@@ -54,7 +54,7 @@ export class ChosenDirective implements AfterViewInit{
                     var rowTax: any = self.calculateService.getTaxAmount(rowItemUnitCost, rowItemQty, rowItemDiscount, rowTaxId);
                     totalTax = parseFloat(totalTax) + parseFloat(rowTax);
                 });
-                if(isNaN(totalTax)){ 
+                if(isNaN(totalTax)){
                     totalTax = 0;
                 }
                 jQuery('#tax-value').val(totalTax);

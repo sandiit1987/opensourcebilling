@@ -101,7 +101,7 @@
                        </select>
                    </td>
                    <td>
-                     <input type="text" name="item-cost" class="form-control" value="{{invoiceItem.rowCost}}" readonly>
+                     <div class="item-cost">{{invoiceItem.rowCost}}</div>
                    </td>
                 </tr>
             </tbody>
@@ -112,7 +112,14 @@
       </div>
 
    </div>
-   <div class="col-sm-7 col-md-8 col-xs-12"></div>
+   <div class="col-sm-7 col-md-8 col-xs-12">
+       <div class=" message">
+         <div class="form-group">
+            <label for="">Notes</label>
+           <textarea  rows="3" class="form-control" value="{{invoiceData.notes}}" readonly></textarea>
+         </div>
+       </div>
+   </div>
    <div class="col-sm-5 col-md-4  col-xs-12float-right">
      <div class="gridsummary-table">
        <ul>
@@ -149,10 +156,4 @@
      </div>
  </div>
 
-</div>
-<div class="row message">
-  <div class="form-group col-sm-12">
-     <label for="">Notes</label>
-    <textarea  rows="3" class="form-control" value="{{invoiceData.notes}}" readonly></textarea>
-  </div>
 </div>
