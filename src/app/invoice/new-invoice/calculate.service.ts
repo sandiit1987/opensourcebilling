@@ -32,12 +32,15 @@ export class CalculateService {
             }
         }
         else{
-            return undefined;
+            discount = discount.substring(0, discount.length - 1);
+            return discount;
         }
 
     }
-    public getTotalAmount(unitCost: any, qty: any, discount: any, tax: any){
+    public getTotalAmount(unitCost: any, qty: any, discountPercentage: any, tax: any){
         //console.log("OKK");
+        //var discountPercentageVal = discountPercentage.substring(0, discountPercentage.length - 1);
+        var discount = this.getDiscountAmount(unitCost, qty, discountPercentage);
         var costAfterDiscount = (unitCost * qty) - discount;
         var taxValue;
         if(tax != ""){
@@ -61,10 +64,10 @@ export class CalculateService {
             totalAmount = 0;
         }
         return totalAmount.toFixed(2);
-        //console.log(taxValue);
-        //console.log(taxAmount);
+
     }
-    public getTaxAmount(unitCost: any, qty: any, discount: any, tax: any){
+    public getTaxAmount(unitCost: any, qty: any, discountPercentage: any, tax: any){
+        var discount = this.getDiscountAmount(unitCost, qty, discountPercentage);
         var costAfterDiscount = (unitCost * qty) - discount;
         var taxValue;
         if(tax != ""){

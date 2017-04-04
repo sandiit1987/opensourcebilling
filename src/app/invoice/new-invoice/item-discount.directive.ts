@@ -11,8 +11,8 @@ export class ItemDiscountDirective {
         this.elementRef = elementRef;
         jQuery(this.elementRef.nativeElement).on('keyup', function(e){
             var code = e.keyCode || e.which;
-            //console.log(code);
-            var restrictedKeyCodes = new Array(37, 38, 39, 40, 9);
+            console.log(code);
+            var restrictedKeyCodes = new Array(37, 38, 39, 40, 9, 16);
             if(jQuery.inArray(code, restrictedKeyCodes) != -1){
                 return false;
             }
@@ -28,11 +28,13 @@ export class ItemDiscountDirective {
             var discountAmount = calculateService.getDiscountAmount(unitCost, qty, discountVal);
             jQuery(this).val(discountAmount);
 
+            var discountPercentage = calculateService.getDiscountPercentage(unitCost, qty, discountVal);
+            //console.log(discountPercentage);
             if(calculateService.percentageExistInDiscountAmount(discountVal)){
-                jQuery(this).parent().find('span').html(discountAmount);
+                jQuery(this).parent().find('span').html(discountPercentage+"%");
             }
             else{
-                var discountPercentage = calculateService.getDiscountPercentage(unitCost, qty, discountVal);
+                //var discountPercentage = calculateService.getDiscountPercentage(unitCost, qty, discountVal);
                 if(discountPercentage == undefined){
                     jQuery(this).parent().find('span').html("0.00%");
                 }
@@ -77,7 +79,7 @@ export class ItemDiscountDirective {
                 var rowTaxId = jQuery(this).val();
                 var rowItemUnitCost = jQuery(this).closest('tr').find('input[name=item-unit-cost]').val();
                 var rowItemQty = jQuery(this).closest('tr').find('input[name=item-qty]').val();
-                var rowItemDiscount = jQuery(this).closest('tr').find('input[name=item-discount]').val();
+                var rowItemDiscount = jQuery(this).closest('tr').find('input[name=item-discount]').parent().find('.discount-percent').html();
                 //console.log(rowItemUnitCost+" "+rowItemQty+" "+rowItemDiscount);
                 var rowTax: any = calculateService.getTaxAmount(rowItemUnitCost, rowItemQty, rowItemDiscount, rowTaxId);
                 totalTax = parseFloat(totalTax) + parseFloat(rowTax);
