@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DefaultValueService } from './default-value.service';
+declare var accounting: any;
 @Injectable()
 export class CalculateService {
 
@@ -9,11 +10,12 @@ export class CalculateService {
     public getDiscountAmount(unitCost: any, qty: any, discount: any){
         var cost = unitCost * qty;
         if(this.percentageExistInDiscountAmount(discount)){
-            discount = discount.substring(0, discount.length - 1);
+            //discount = discount.substring(0, discount.length - 1);
+            discount = accounting.unformat(discount);
             return (cost * discount) / 100;
         }
         else{
-            return discount;
+            return accounting.unformat(discount);
         }
     }
     public getDiscountPercentage(unitCost: any, qty: any, discount: any){
@@ -60,7 +62,8 @@ export class CalculateService {
         if(isNaN(totalAmount)){
             totalAmount = 0;
         }
-        return totalAmount.toFixed(2);
+        return accounting.formatMoney(totalAmount);
+        //return totalAmount.toFixed(2);
         //console.log(taxValue);
         //console.log(taxAmount);
     }

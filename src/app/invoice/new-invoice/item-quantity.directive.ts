@@ -1,6 +1,7 @@
 import { Directive, ElementRef, OnInit, EventEmitter, Output } from '@angular/core';
 import { CalculateService } from './calculate.service';
 declare var jQuery: any;
+declare var accounting: any;
 @Directive({
   selector: '[itemQuantity]'
 })
@@ -36,7 +37,7 @@ export class ItemQuantityDirective implements OnInit {
         });*/
         jQuery(this.elementRef.nativeElement).on('keyup', function(){
 
-            var unitCost = parseInt(jQuery(this).parent().parent().find('input[name=item-unit-cost]').val());
+            var unitCost = accounting.unformat(jQuery(this).parent().parent().find('input[name=item-unit-cost]').val());
             if(isNaN(unitCost)){
                 unitCost = 0;
             }
@@ -46,7 +47,7 @@ export class ItemQuantityDirective implements OnInit {
                 qty = 0;
             }
 
-            var discountVal = jQuery(this).closest('tr').find("input[name=item-discount]").val();
+            var discountVal = accounting.unformat(jQuery(this).closest('tr').find("input[name=item-discount]").val());
 
             var taxId = jQuery(this).parent().parent().find('select[name=tax-id]').val();
 
@@ -64,23 +65,23 @@ export class ItemQuantityDirective implements OnInit {
 
             var totalCost: any = 0;
             jQuery(this).closest('.invoice-items').find('div.item-cost').each(function(){
-                var rowCost = jQuery(this).html();
+                var rowCost = accounting.unformat(jQuery(this).html());
                 if(rowCost == ""){
                     rowCost = 0;
                 }
                 totalCost = parseFloat(totalCost) + parseFloat(rowCost);
 
             });
-            totalCost = totalCost.toFixed(2);
-            jQuery("#item-net-total").html("$"+totalCost);
+            totalCost = accounting.formatMoney(totalCost);
+            jQuery("#item-net-total").html(totalCost);
             /* Total tax calculation */
             var totalTax: any = 0;
             jQuery('.invoice-items').find('select[name=tax-id]').each(function(){
 
                 var rowTaxId = jQuery(this).val();
-                var rowItemUnitCost = jQuery(this).closest('tr').find('input[name=item-unit-cost]').val();
+                var rowItemUnitCost = accounting.unformat(jQuery(this).closest('tr').find('input[name=item-unit-cost]').val());
                 var rowItemQty = jQuery(this).closest('tr').find('input[name=item-qty]').val();
-                var rowItemDiscount = jQuery(this).closest('tr').find('input[name=item-discount]').val();
+                var rowItemDiscount = accounting.unformat(accounting.unformat(jQuery(this).closest('tr').find('input[name=item-discount]').val()));
                 //console.log(rowItemUnitCost+" "+rowItemQty+" "+rowItemDiscount);
                 var rowTax: any = calculateService.getTaxAmount(rowItemUnitCost, rowItemQty, rowItemDiscount, rowTaxId);
                 totalTax = parseFloat(totalTax) + parseFloat(rowTax);
@@ -88,6 +89,7 @@ export class ItemQuantityDirective implements OnInit {
             if(isNaN(totalTax)){
                 totalTax = 0;
             }
+            totalTax = accounting.formatMoney(totalTax);
             jQuery('#tax-value').val(totalTax);
         });
     }

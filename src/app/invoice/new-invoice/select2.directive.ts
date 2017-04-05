@@ -1,5 +1,6 @@
 import { Directive, ElementRef, Input, AfterViewInit } from '@angular/core';
 declare var jQuery: any;
+declare var accounting: any;
 import { CalculateService } from './calculate.service';
 @Directive({
   selector: '[select2]'
@@ -7,7 +8,7 @@ import { CalculateService } from './calculate.service';
 export class Select2Directive implements AfterViewInit{
   @Input() selectedVal: number;
   constructor(private elementRef: ElementRef, private calculateService: CalculateService) {
-
+      //jQuery('.select2-search input').on()
   }
   ngAfterViewInit(){
       var self = this;
@@ -21,8 +22,8 @@ export class Select2Directive implements AfterViewInit{
 
           if(jQuery(this).attr('name') == "tax-id"){
               var taxId = jQuery(this).val();
-              var discountVal = jQuery(this).closest('tr').find("input[name=item-discount]").val();
-              var unitCost: any = parseFloat(jQuery(this).closest('tr').find('input[name=item-unit-cost]').val()).toFixed(2);
+              var discountVal = accounting.unformat(jQuery(this).closest('tr').find("input[name=item-discount]").val());
+              var unitCost: any = accounting.unformat(jQuery(this).closest('tr').find('input[name=item-unit-cost]').val());
               if(isNaN(unitCost)){
                   unitCost = 0;
               }
@@ -35,24 +36,24 @@ export class Select2Directive implements AfterViewInit{
 
               var totalCost: any = 0;
               jQuery(this).closest('.invoice-items').find('div.item-cost').each(function(){
-                  var rowCost = jQuery(this).html();
+                  var rowCost = accounting.unformat(jQuery(this).html());
                   if(rowCost == ""){
                       rowCost = 0;
                   }
                   totalCost = parseFloat(totalCost) + parseFloat(rowCost);
 
               });
-              totalCost = totalCost.toFixed(2);
-              jQuery("#item-net-total").html("$"+totalCost);
+              totalCost = accounting.formatMoney(totalCost);
+              jQuery("#item-net-total").html(totalCost);
 
               /* Total tax calculation */
               var totalTax: any = 0;
               jQuery('.invoice-items').find('select[name=tax-id]').each(function(){
 
                   var rowTaxId = jQuery(this).val();
-                  var rowItemUnitCost = jQuery(this).closest('tr').find('input[name=item-unit-cost]').val();
+                  var rowItemUnitCost = accounting.unformat(jQuery(this).closest('tr').find('input[name=item-unit-cost]').val());
                   var rowItemQty = jQuery(this).closest('tr').find('input[name=item-qty]').val();
-                  var rowItemDiscount = jQuery(this).closest('tr').find('input[name=item-discount]').val();
+                  var rowItemDiscount = accounting.unformat(jQuery(this).closest('tr').find('input[name=item-discount]').val());
                   //console.log(rowItemUnitCost+" "+rowItemQty+" "+rowItemDiscount);
                   var rowTax: any = self.calculateService.getTaxAmount(rowItemUnitCost, rowItemQty, rowItemDiscount, rowTaxId);
                   totalTax = parseFloat(totalTax) + parseFloat(rowTax);
@@ -60,14 +61,25 @@ export class Select2Directive implements AfterViewInit{
               if(isNaN(totalTax)){
                   totalTax = 0;
               }
+              totalTax = accounting.formatMoney(totalTax);
               jQuery('#tax-value').val(totalTax);
           }
       });
-      console.log(self.selectedVal);
+
       if(self.selectedVal != undefined){
           jQuery(this.elementRef.nativeElement).val(self.selectedVal);
           jQuery(this.elementRef.nativeElement).trigger("change");
       }
+      //console.log(jQuery(self.elementRef.nativeElement).attr("name"));
+      //console.log(jQuery(self.elementRef.nativeElement).closest('td').find('.select2-search input').attr("name"));
+      /*jQuery(self.elementRef.nativeElement).closest('td').find('.select2-search input').on("keyup", function(e){
+          var code = e.keyCode || e.which;
+          console.log(code);
+      });*/
+      /*jQuery(document).on('keyup', '.select2-search input', function(e){
+          var code = e.keyCode || e.which;
+          console.log(code);
+      });*/
   }
 
 }

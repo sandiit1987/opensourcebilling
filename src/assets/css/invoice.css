@@ -121,6 +121,7 @@ input[name=item-unit-cost], input[name=item-cost], input[name=item-qty], input[n
 }
 .item-cost {
     padding: 5px 0;
+    text-align: right;
 }
 .select2-container--default.select2-container--focus .select2-selection--multiple{
     border: 1px solid #a5a5a4;

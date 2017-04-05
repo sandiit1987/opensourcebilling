@@ -1,6 +1,7 @@
 import { Directive, ElementRef } from '@angular/core';
 import { CalculateService } from './calculate.service';
 declare var jQuery: any;
+declare var accounting: any;
 @Directive({
   selector: '[itemDiscount]'
 })
@@ -9,6 +10,10 @@ export class ItemDiscountDirective {
     constructor(elementRef: ElementRef, private calculateService: CalculateService) {
 
         this.elementRef = elementRef;
+        jQuery(this.elementRef.nativeElement).on('blur', function(){
+            var discountValue = accounting.formatMoney(jQuery(this).val());
+            jQuery(this).val(discountValue);
+        });
         jQuery(this.elementRef.nativeElement).on('keyup', function(e){
             var code = e.keyCode || e.which;
             //console.log(code);
@@ -17,7 +22,7 @@ export class ItemDiscountDirective {
                 return false;
             }
             var discountVal = jQuery(this).val();
-            var unitCost: any = parseFloat(jQuery(this).parent().parent().find('input[name=item-unit-cost]').val()).toFixed(2);
+            var unitCost: any = accounting.unformat(jQuery(this).parent().parent().find('input[name=item-unit-cost]').val()).toFixed(2);
             if(isNaN(unitCost)){
                 unitCost = 0;
             }
@@ -47,19 +52,19 @@ export class ItemDiscountDirective {
 
             var totalCost: any = 0;
             jQuery(this).closest('.invoice-items').find('div.item-cost').each(function(){
-                var rowCost = jQuery(this).html();
+                var rowCost = accounting.unformat(jQuery(this).html());
                 if(rowCost == ""){
                     rowCost = 0;
                 }
                 totalCost = parseFloat(totalCost) + parseFloat(rowCost);
 
             });
-            totalCost = totalCost.toFixed(2);
-            jQuery("#item-net-total").html("$"+totalCost);
+            totalCost = accounting.formatMoney(totalCost);
+            jQuery("#item-net-total").html(totalCost);
             /* Total discount calculation */
             var totalDiscount: any = 0;
             jQuery('.invoice-items').find('input[name=item-discount]').each(function(){
-                var rowDiscount = jQuery(this).val();
+                var rowDiscount = accounting.unformat(jQuery(this).val());
                 if(rowDiscount == ""){
                     rowDiscount = 0;
                 }
@@ -69,13 +74,14 @@ export class ItemDiscountDirective {
             if(isNaN(totalDiscount)){
                 totalDiscount = 0;
             }
+            totalDiscount = accounting.formatMoney(totalDiscount);
             jQuery("#discount-value").val(totalDiscount);
             /* Total tax calculation */
             var totalTax: any = 0;
             jQuery('.invoice-items').find('select[name=tax-id]').each(function(){
 
                 var rowTaxId = jQuery(this).val();
-                var rowItemUnitCost = jQuery(this).closest('tr').find('input[name=item-unit-cost]').val();
+                var rowItemUnitCost = accounting.unformat(jQuery(this).closest('tr').find('input[name=item-unit-cost]').val());
                 var rowItemQty = jQuery(this).closest('tr').find('input[name=item-qty]').val();
                 var rowItemDiscount = jQuery(this).closest('tr').find('input[name=item-discount]').val();
                 //console.log(rowItemUnitCost+" "+rowItemQty+" "+rowItemDiscount);
@@ -85,6 +91,7 @@ export class ItemDiscountDirective {
             if(isNaN(totalTax)){
                 totalTax = 0;
             }
+            totalTax = accounting.formatMoney(totalTax);
             jQuery('#tax-value').val(totalTax);
         });
     }

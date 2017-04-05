@@ -20,6 +20,7 @@ import { CalculateService } from './invoice/new-invoice/calculate.service';
 import { NextInputFocusDirective } from './invoice/new-invoice/next-input-focus.directive';
 import { ItemDescriptionDirective } from './invoice/new-invoice/item-description.directive';
 import { Select2Directive } from './invoice/new-invoice/select2.directive';
+import { Select2KeypressDirective } from './invoice/new-invoice/select2-keypress.directive';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { Select2Directive } from './invoice/new-invoice/select2.directive';
     ItemDiscountDirective,
     NextInputFocusDirective,
     ItemDescriptionDirective,
-    Select2Directive
+    Select2Directive,
+    Select2KeypressDirective
   ],
   imports: [
     BrowserModule,

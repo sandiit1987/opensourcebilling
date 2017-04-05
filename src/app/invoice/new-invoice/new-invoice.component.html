@@ -59,7 +59,7 @@
 
    <div class="col-sm-12">
 
-      <div class="table-responsive">
+      <div class="table-responsive" select2Keypress>
          <table class="table">
             <thead>
                <tr>
@@ -82,7 +82,7 @@
                       </div>
                    </td>
                    <td>
-                     <select multiple="multiple" select2 style="width: 100%;" name="item-id" data-placeholder="Select an item">
+                     <select multiple="multiple" select2 style="width: 100%;" name="item-id" data-placeholder="Select an item" class="nextInputFocus">
                         <option value=""></option>
                         <option *ngFor="let item of items" value="{{item.id}}">{{item.title}}</option>
                      </select>
@@ -96,7 +96,7 @@
                        <span class="discount-percent"></span>
                    </td>
                    <td>
-                     <select multiple="multiple" select2 style="width: 100%;" name="tax-id" data-placeholder="No tax">
+                     <select multiple="multiple" select2 style="width: 100%;" name="tax-id" data-placeholder="No tax" class="nextInputFocus">
                         <option value=""></option>
                         <option *ngFor="let tax of taxData" value="{{tax.id}}">{{tax.name}}</option>
                      </select>
@@ -114,7 +114,7 @@
                           </div>
                        </td>
                        <td>
-                           <select multiple="multiple" select2 style="width: 100%;" name="item-id" data-placeholder="Select an item">
+                           <select multiple="multiple" select2 style="width: 100%;" name="item-id" data-placeholder="Select an item" class="nextInputFocus">
                               <option value=""></option>
                               <option *ngFor="let item of items" value="{{item.id}}">{{item.title}}</option>
                            </select>
@@ -127,7 +127,7 @@
                            <span class="discount-percent"></span>
                        </td>
                        <td>
-                         <select multiple="multiple" select2 style="width: 100%;" name="tax-id" data-placeholder="No tax">
+                         <select multiple="multiple" select2 style="width: 100%;" name="tax-id" data-placeholder="No tax" class="nextInputFocus">
                             <option value=""></option>
                             <option *ngFor="let tax of taxData" value="{{tax.id}}">{{tax.name}}</option>
                          </select>
