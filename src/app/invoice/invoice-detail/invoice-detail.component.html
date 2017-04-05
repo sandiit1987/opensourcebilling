@@ -13,9 +13,9 @@
           <div class="form-group">
              <label class="col-sm-2 control-label">Client<span>*</span></label>
              <div class="col-sm-10">
-                 <select name="client-id" data-placeholder="Select a client" class="chosen-select-deselect" chosen [selectedVal]="invoiceData.client" disabled>
-                   <option value=""></option>
-                   <option *ngFor="let client of clients" [value]="client.id" >{{client.name}}</option>
+                 <select multiple="multiple" select2 style="width: 100%;" name="client-id" data-placeholder="Select a client" [selectedVal]="invoiceData.client" disabled>
+                    <option value=""></option>
+                    <option *ngFor="let client of clients" value="{{client.id}}">{{client.name}}</option>
                  </select>
 
                 <small>client you want to send invoice</small>
@@ -24,10 +24,10 @@
           <div class="form-group">
              <label class="col-sm-2 control-label">Terms<span>*</span></label>
              <div class="col-sm-10">
-                 <select name="term-id" data-placeholder="Select a payment type" class="chosen-select-deselect" chosen [selectedVal]="invoiceData.term" disabled>
-                   <option value=""></option>
-                   <option *ngFor="let term of terms" value="{{term.id}}">{{term.title}}</option>
-                 </select>
+               <select multiple="multiple" select2 style="width: 100%;" name="term-id" [selectedVal]="invoiceData.term" data-placeholder="Select a payment type" disabled>
+                  <option value=""></option>
+                  <option *ngFor="let term of terms" value="{{term.id}}">{{term.title}}</option>
+               </select>
                 <small>client you want to send invoice</small>
              </div>
           </div>
@@ -81,10 +81,11 @@
                       </div>
                    </td>
                    <td>
-                       <select name="item-id" data-placeholder="Select an item" class="chosen-select-deselect" chosen [selectedVal]="invoiceItem.itemId" disabled>
-                         <option value=""></option>
-                         <option *ngFor="let item of items" value="{{item.id}}">{{item.title}}</option>
-                       </select>
+
+                     <select multiple="multiple" select2 style="width: 100%;" name="item-id" data-placeholder="Select an item" [selectedVal]="invoiceItem.itemId" disabled>
+                        <option value=""></option>
+                        <option *ngFor="let item of items" value="{{item.id}}">{{item.title}}</option>
+                     </select>
                   </td>
                    <td><input type="text" name="item-description" value="{{invoiceItem.itemDescription}}" readonly class="form-control"></td>
                    <td><input type="text" name="item-unit-cost" value="{{invoiceItem.itemUnitCost}}" readonly itemUnitCost class="form-control"></td>
@@ -94,11 +95,10 @@
                        <span class="discount-percent">{{invoiceItem.itemDiscountPercentage}}</span>
                    </td>
                    <td>
-
-                       <select name="tax-id" data-placeholder="No tax" class="chosen-select-deselect" [selectedVal]="invoiceItem.taxId" chosen disabled>
-                         <option value=""></option>
-                         <option *ngFor="let tax of taxData" value="{{tax.id}}">{{tax.name}}</option>
-                       </select>
+                     <select multiple="multiple" select2 style="width: 100%;" name="tax-id" data-placeholder="No tax" [selectedVal]="invoiceItem.taxId" disabled>
+                        <option value=""></option>
+                        <option *ngFor="let tax of taxData" value="{{tax.id}}">{{tax.name}}</option>
+                     </select>
                    </td>
                    <td>
                      <div class="item-cost">{{invoiceItem.rowCost}}</div>
@@ -123,37 +123,26 @@
    <div class="col-sm-5 col-md-4  col-xs-12float-right">
      <div class="gridsummary-table">
        <ul>
-         <!--<li>subtotal <span id="cost-subtotal">{{invoiceData.subTotal}}</span></li>
-         <li>
-           <div class="discount">
-              Discount
-              <select id="discount-option" class="chosen-select-deselect without-search" chosen [selectedVal]="invoiceData.discountOption" disabled>
-                <option value="percent" selected>%</option>
-                <option value="dollar">USD</option>
-              </select>
-           </div>
-           <input type="text" class="form-control" name="" id="discount-value" value="{{invoiceData.discountValue}}" readonly>
-       </li>-->
-       <li>
-            <div class="discount">
-               Discount
-            </div>
-            <input type="text" class="form-control" name="" id="discount-value" readonly value="{{invoiceData.discountValue}}">
-       </li>
-       <li>
-            <div class="discount">
-               Tax
-            </div>
-            <input type="text" class="form-control" name="" id="tax-value" readonly value="{{invoiceData.taxValue}}">
-       </li>
+           <li>
+                <div class="discount">
+                   Discount
+                </div>
+                <input type="text" class="form-control" name="" id="discount-value" readonly value="{{invoiceData.discountValue}}">
+           </li>
+           <li>
+                <div class="discount">
+                   Tax
+                </div>
+                <input type="text" class="form-control" name="" id="tax-value" readonly value="{{invoiceData.taxValue}}">
+           </li>
          <li>
            <div class="net-total">
            <strong>Net total</strong>
              <span id="item-net-total">{{invoiceData.netTotal}}</span>
            </div>
          </li>
-       </ul>
-     </div>
- </div>
+      </ul>
+    </div>
+</div>
 
 </div>

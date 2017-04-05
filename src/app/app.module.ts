@@ -9,7 +9,6 @@ import { NewInvoiceComponent } from './invoice/new-invoice/new-invoice.component
 
 import { AddNewItemDirective } from './invoice/new-invoice/add-new-item.directive';
 import { SortableDirective } from './invoice/new-invoice/sortable.directive';
-import { ChosenDirective } from './invoice/new-invoice/chosen.directive';
 import { InvoiceDatepickerDirective } from './invoice/new-invoice/invoice-datepicker.directive';
 import { DeleteSortableDirective } from './invoice/new-invoice/delete-sortable.directive';
 import { ItemUnitCostDirective } from './invoice/new-invoice/item-unit-cost.directive';
@@ -20,6 +19,7 @@ import { DefaultValueService } from './invoice/new-invoice/default-value.service
 import { CalculateService } from './invoice/new-invoice/calculate.service';
 import { NextInputFocusDirective } from './invoice/new-invoice/next-input-focus.directive';
 import { ItemDescriptionDirective } from './invoice/new-invoice/item-description.directive';
+import { Select2Directive } from './invoice/new-invoice/select2.directive';
 
 
 @NgModule({
@@ -29,7 +29,6 @@ import { ItemDescriptionDirective } from './invoice/new-invoice/item-description
     NewInvoiceComponent,
     AddNewItemDirective,
     SortableDirective,
-    ChosenDirective,
     InvoiceDatepickerDirective,
     DeleteSortableDirective,
     ItemUnitCostDirective,
@@ -37,7 +36,8 @@ import { ItemDescriptionDirective } from './invoice/new-invoice/item-description
     InvoiceDetailComponent,
     ItemDiscountDirective,
     NextInputFocusDirective,
-    ItemDescriptionDirective
+    ItemDescriptionDirective,
+    Select2Directive
   ],
   imports: [
     BrowserModule,

@@ -14,9 +14,9 @@
           <div class="form-group">
              <label class="col-sm-2 control-label">Client<span>*</span></label>
              <div class="col-sm-10">
-                 <select name="client-id" data-placeholder="Select a client" class="chosen-select-deselect" chosen>
-                   <option value=""></option>
-                   <option *ngFor="let client of clients" value="{{client.id}}">{{client.name}}</option>
+                 <select multiple="multiple" select2 style="width: 100%;" name="client-id" data-placeholder="Select a client">
+                    <option value=""></option>
+                    <option *ngFor="let client of clients" value="{{client.id}}">{{client.name}}</option>
                  </select>
 
                 <small>client you want to send invoice</small>
@@ -25,10 +25,10 @@
           <div class="form-group">
              <label class="col-sm-2 control-label">Terms<span>*</span></label>
              <div class="col-sm-10">
-                 <select name="term-id" data-placeholder="Select a payment type" class="chosen-select-deselect" chosen>
-                   <option value=""></option>
-                   <option *ngFor="let term of terms" value="{{term.id}}">{{term.title}}</option>
-                 </select>
+               <select multiple="multiple" select2 style="width: 100%;" name="term-id" data-placeholder="Select a payment type">
+                  <option value=""></option>
+                  <option *ngFor="let term of terms" value="{{term.id}}">{{term.title}}</option>
+               </select>
                 <small>client you want to send invoice</small>
              </div>
           </div>
@@ -64,12 +64,12 @@
             <thead>
                <tr>
                   <th>&nbsp;</th>
-                  <th>Item</th>
+                  <th width="110">Item</th>
                   <th width="250">Description</th>
                   <th width="80">Unit Cost</th>
                   <th width="70">Qty</th>
                   <th width="130">Discount</th>
-                  <th>Tax</th>
+                  <th width="105">Tax</th>
                   <th>Line Total</th>
                </tr>
             </thead>
@@ -82,10 +82,10 @@
                       </div>
                    </td>
                    <td>
-                       <select name="item-id" data-placeholder="Select an item" class="chosen-select-deselect nextInputFocus" chosen>
-                         <option value=""></option>
-                         <option *ngFor="let item of items" value="{{item.id}}">{{item.title}}</option>
-                       </select>
+                     <select multiple="multiple" select2 style="width: 100%;" name="item-id" data-placeholder="Select an item">
+                        <option value=""></option>
+                        <option *ngFor="let item of items" value="{{item.id}}">{{item.title}}</option>
+                     </select>
 
                   </td>
                    <td><input type="text" name="item-description" value="" class="form-control nextInputFocus" itemDescription (triggerEventEmitter)="triggerEventEmitterAddRow()"></td>
@@ -96,10 +96,10 @@
                        <span class="discount-percent"></span>
                    </td>
                    <td>
-                       <select name="tax-id" data-placeholder="No tax" class="chosen-select-deselect without-search nextInputFocus" chosen>
-                         <option value=""></option>
-                         <option *ngFor="let tax of taxData" value="{{tax.id}}">{{tax.name}}</option>
-                       </select>
+                     <select multiple="multiple" select2 style="width: 100%;" name="tax-id" data-placeholder="No tax">
+                        <option value=""></option>
+                        <option *ngFor="let tax of taxData" value="{{tax.id}}">{{tax.name}}</option>
+                     </select>
                    </td>
                    <td>
                      <div class="item-cost"></div>
@@ -114,9 +114,9 @@
                           </div>
                        </td>
                        <td>
-                           <select name="item-id" data-placeholder="Select an item" class="chosen-select-deselect nextInputFocus" chosen>
-                             <option value=""></option>
-                             <option *ngFor="let item of items" value="{{item.id}}">{{item.title}}</option>
+                           <select multiple="multiple" select2 style="width: 100%;" name="item-id" data-placeholder="Select an item">
+                              <option value=""></option>
+                              <option *ngFor="let item of items" value="{{item.id}}">{{item.title}}</option>
                            </select>
                       </td>
                        <td><input type="text" name="item-description" value=""  class="form-control nextInputFocus" (triggerEventEmitter)="triggerEventEmitterAddRow()" itemDescription></td>
@@ -127,10 +127,10 @@
                            <span class="discount-percent"></span>
                        </td>
                        <td>
-                           <select name="tax-id" data-placeholder="No tax" class="chosen-select-deselect without-search nextInputFocus" chosen>
-                             <option value=""></option>
-                             <option *ngFor="let tax of taxData" value="{{tax.id}}">{{tax.name}}</option>
-                           </select>
+                         <select multiple="multiple" select2 style="width: 100%;" name="tax-id" data-placeholder="No tax">
+                            <option value=""></option>
+                            <option *ngFor="let tax of taxData" value="{{tax.id}}">{{tax.name}}</option>
+                         </select>
                        </td>
                        <td>
                          <div class="item-cost"></div>
@@ -158,17 +158,6 @@
    <div class="col-sm-5 col-md-4  col-xs-12float-right">
      <div class="gridsummary-table">
        <ul>
-         <!--<li>subtotal <span id="cost-subtotal">$0.00</span></li>
-         <li>
-           <div class="discount">
-              Discount
-              <select id="discount-option" class="chosen-select-deselect " chosen (discountOptionEvent)="listenDiscountOptionEvent($event)">
-                <option value="percent" selected>%</option>
-                <option value="dollar">USD</option>
-              </select>
-           </div>
-           <input type="text" class="form-control" name="" id="discount-value" [(ngModel)]="invoiceFormData.discountValue">
-       </li>-->
         <li>
              <div class="discount">
                 Discount
