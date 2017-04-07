@@ -62,7 +62,7 @@ export class CalculateService {
         if(isNaN(totalAmount)){
             totalAmount = 0;
         }
-        return accounting.formatMoney(totalAmount);
+        return accounting.formatNumber(totalAmount);
         //return totalAmount.toFixed(2);
         //console.log(taxValue);
         //console.log(taxAmount);

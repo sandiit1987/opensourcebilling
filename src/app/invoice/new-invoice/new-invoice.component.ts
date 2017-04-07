@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, ViewChild, ViewContainerRef, TemplateRef, ComponentFactoryResolver, EventEmitter } from '@angular/core';
 import { DefaultValueService } from './default-value.service';
+import { FormGroup, FormControl, FormArray } from '@angular/forms';
 declare var jQuery: any;
 @Component({
   selector: 'osb-new-invoice',
@@ -24,6 +25,11 @@ export class NewInvoiceComponent {
     private defaultQuantity: Number;
     private defaultUnitPrice;
 
+    private invoiceForm: FormGroup;
+    @ViewChild('invoiceDate') invoiceDate;
+    @ViewChild('invoiceDueDate') invoiceDueDate;
+    @ViewChild('invoiceNumber') invoiceNumber;
+
     constructor(private resolver:ComponentFactoryResolver, private defaultValueService: DefaultValueService){
         //console.log(defaultValueService.getInvoiceFormData());
         this.invoiceFormData = defaultValueService.getInvoiceFormData();
@@ -34,14 +40,69 @@ export class NewInvoiceComponent {
         this.defaultQuantity = defaultValueService.defaultQuantity;
         this.defaultUnitPrice = defaultValueService.defaultUnitPrice.toFixed(2);
 
-    }
+        this.invoiceForm = new FormGroup({
+            company: new FormControl(''),
+            'client-id': new FormControl(''),
+            'term-id': new FormControl(''),
+            invoiceNumber: new FormControl(''),
+            invoiceDate: new FormControl(),
+            'due-date': new FormControl(),
+            /*items: new FormGroup({
+                itemId: new FormArray([
+                    new FormControl('')
+                ])
+            })*/
+            /*items: new FormArray([
+                new FormControl('')
+            ])*/
+            /*items: new FormGroup({
+                'userName': new FormControl('')
+            })*/
+            items: new FormArray([
+                new FormGroup({
+                    itemId: new FormControl(""),
+                    itemDescription: new FormControl(""),
+                    itemUnitCost: new FormControl(""),
+                    itemQty: new FormControl(""),
+                    itemDiscount: new FormControl(""),
+                    itemDiscountPercentage: new FormControl(""),
+                    taxId: new FormControl(""),
+                    rowCost: new FormControl("")
+                })
+            ])
+        });
 
+
+
+    }
+    addMoreItem(){
+
+        (<FormArray> this.invoiceForm.get('items')).push(new FormGroup({
+            itemId: new FormControl(""),
+            itemDescription: new FormControl(""),
+            itemUnitCost: new FormControl(""),
+            itemQty: new FormControl(""),
+            itemDiscount: new FormControl(""),
+            itemDiscountPercentage: new FormControl(""),
+            taxId: new FormControl(""),
+            rowCost: new FormControl("")
+        }));
+
+    }
 	triggerEventEmitterAddRow(){
 		this.cloneTemplate();
 	}
     cloneTemplate(){
         this.container.createEmbeddedView(this.template);
     }
+    invoiceFormSubmit(){
+        //console.log(this.invoiceDate.nativeElement.value);
+        this.invoiceForm.value.invoiceNumber = this.invoiceNumber.nativeElement.value;
+        this.invoiceForm.value.invoiceDate = this.invoiceDate.nativeElement.value;
+        this.invoiceForm.value['due-date'] = this.invoiceDueDate.nativeElement.value;
+        console.log(this.invoiceForm);
+    }
+
     saveInvoiceData(){
         var self = this;
         self.invoiceFormData.items = [];

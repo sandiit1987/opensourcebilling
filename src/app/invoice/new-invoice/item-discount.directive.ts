@@ -11,7 +11,7 @@ export class ItemDiscountDirective {
 
         this.elementRef = elementRef;
         jQuery(this.elementRef.nativeElement).on('blur', function(){
-            var discountValue = accounting.formatMoney(jQuery(this).val());
+            var discountValue = accounting.formatNumber(jQuery(this).val());
             jQuery(this).val(discountValue);
         });
         jQuery(this.elementRef.nativeElement).on('keyup', function(e){
@@ -59,7 +59,7 @@ export class ItemDiscountDirective {
                 totalCost = parseFloat(totalCost) + parseFloat(rowCost);
 
             });
-            totalCost = accounting.formatMoney(totalCost);
+            totalCost = accounting.formatNumber(totalCost);
             jQuery("#item-net-total").html(totalCost);
             /* Total discount calculation */
             var totalDiscount: any = 0;
@@ -74,7 +74,7 @@ export class ItemDiscountDirective {
             if(isNaN(totalDiscount)){
                 totalDiscount = 0;
             }
-            totalDiscount = accounting.formatMoney(totalDiscount);
+            totalDiscount = accounting.formatNumber(totalDiscount);
             jQuery("#discount-value").val(totalDiscount);
             /* Total tax calculation */
             var totalTax: any = 0;
@@ -91,7 +91,7 @@ export class ItemDiscountDirective {
             if(isNaN(totalTax)){
                 totalTax = 0;
             }
-            totalTax = accounting.formatMoney(totalTax);
+            totalTax = accounting.formatNumber(totalTax);
             jQuery('#tax-value').val(totalTax);
         });
     }

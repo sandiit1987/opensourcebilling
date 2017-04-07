@@ -43,7 +43,7 @@ export class Select2Directive implements AfterViewInit{
                   totalCost = parseFloat(totalCost) + parseFloat(rowCost);
 
               });
-              totalCost = accounting.formatMoney(totalCost);
+              totalCost = accounting.formatNumber(totalCost);
               jQuery("#item-net-total").html(totalCost);
 
               /* Total tax calculation */
@@ -61,7 +61,7 @@ export class Select2Directive implements AfterViewInit{
               if(isNaN(totalTax)){
                   totalTax = 0;
               }
-              totalTax = accounting.formatMoney(totalTax);
+              totalTax = accounting.formatNumber(totalTax);
               jQuery('#tax-value').val(totalTax);
           }
       });

@@ -3,184 +3,150 @@
             New Invoice
 
         </h1>
-       <div class="col-sm-7 form-horizontal">
-          <div class="form-group">
-             <label class="col-sm-2 control-label">Company<span>*</span></label>
-             <div class="col-sm-10">
-                <input type="text" class="form-control" value=""  placeholder="" [(ngModel)]="invoiceFormData.company">
-                <small>company for this invoice</small>
-             </div>
-          </div>
-          <div class="form-group">
-             <label class="col-sm-2 control-label">Client<span>*</span></label>
-             <div class="col-sm-10">
-                 <select multiple="multiple" select2 style="width: 100%;" name="client-id" data-placeholder="Select a client">
-                    <option value=""></option>
-                    <option *ngFor="let client of clients" value="{{client.id}}">{{client.name}}</option>
-                 </select>
-
-                <small>client you want to send invoice</small>
-             </div>
-          </div>
-          <div class="form-group">
-             <label class="col-sm-2 control-label">Terms<span>*</span></label>
-             <div class="col-sm-10">
-               <select multiple="multiple" select2 style="width: 100%;" name="term-id" data-placeholder="Select a payment type">
-                  <option value=""></option>
-                  <option *ngFor="let term of terms" value="{{term.id}}">{{term.title}}</option>
-               </select>
-                <small>client you want to send invoice</small>
-             </div>
-          </div>
-       </div>
-       <div class="col-sm-5 form-horizontal">
-          <div class="form-group">
-             <label class="col-sm-4 control-label">Invoice #<span>*</span></label>
-             <div class="col-sm-8">
-                <input type="text" class="form-control"  placeholder="" [(ngModel)]="invoiceFormData.invoiceNumber" readonly>
-                <small>Auto Generated</small>
-             </div>
-          </div>
-          <div class="form-group">
-             <label class="col-sm-4 control-label">Invoice Date<span>*</span></label>
-             <div class="col-sm-8">
-                <input type="text" class="form-control"  placeholder="" invoiceDatepicker value="{{ invoiceFormData.invoiceDate }}">
-             </div>
-          </div>
-          <div class="form-group">
-             <label class="col-sm-4 control-label">Due date<span>*</span></label>
-             <div class="col-sm-8">
-                <input type="text" class="form-control" name="due-date"  placeholder="" invoiceDatepicker>
-             </div>
-          </div>
-       </div>
-</div>
-<div class="row billing-item-section">
-
-   <div class="col-sm-12">
-
-      <div class="table-responsive" select2Keypress>
-         <table class="table">
-            <thead>
-               <tr>
-                  <th>&nbsp;</th>
-                  <th width="110">Item</th>
-                  <th width="250">Description</th>
-                  <th width="80">Unit Cost</th>
-                  <th width="70">Qty</th>
-                  <th width="130">Discount</th>
-                  <th width="105">Tax</th>
-                  <th>Line Total</th>
-               </tr>
-            </thead>
-            <tbody id="sortable" class="invoice-items" sortable>
-                <tr class="ui-state-default">
-                   <td>
-                     <div class="icon-action">
-                      <a  href="javascript:void(0)" deleteSortable><img src="assets/images/close.png" alt=""></a>
-                      <a  href="javascript:void(0)"><img src="assets/images/sort.png" alt=""></a>
-                      </div>
-                   </td>
-                   <td>
-                     <select multiple="multiple" select2 style="width: 100%;" name="item-id" data-placeholder="Select an item" class="nextInputFocus">
+        <form [formGroup]="invoiceForm" novalidate="novalidate" (ngSubmit)="invoiceFormSubmit()">
+           <div class="col-sm-7 form-horizontal">
+              <div class="form-group">
+                 <label class="col-sm-2 control-label">Company<span>*</span></label>
+                 <div class="col-sm-10">
+                    <input type="text" class="form-control" placeholder="" formControlName="company">
+                    <small>company for this invoice</small>
+                 </div>
+              </div>
+              <div class="form-group">
+                 <label class="col-sm-2 control-label">Client<span>*</span></label>
+                 <div class="col-sm-10">
+                     <select style="width: 100%;" formControlName="client-id" data-placeholder="Select a client">
                         <option value=""></option>
-                        <option *ngFor="let item of items" value="{{item.id}}">{{item.title}}</option>
+                        <option *ngFor="let client of clients" value="{{client.id}}">{{client.name}}</option>
                      </select>
 
-                  </td>
-                   <td><input type="text" name="item-description" value="" class="form-control nextInputFocus" itemDescription (triggerEventEmitter)="triggerEventEmitterAddRow()"></td>
-                   <td><input type="text" name="item-unit-cost" [value]="defaultUnitPrice" itemUnitCost class="form-control nextInputFocus"></td>
-                   <td><input type="text" name="item-qty" itemQuantity (triggerEventEmitter)="triggerEventEmitterAddRow()" class="form-control nextInputFocus" [value]="defaultQuantity"></td>
-                   <td>
-                       <input type="text" name="item-discount" value="" class="form-control item-discount nextInputFocus" itemDiscount>
-                       <span class="discount-percent"></span>
-                   </td>
-                   <td>
-                     <select multiple="multiple" select2 style="width: 100%;" name="tax-id" data-placeholder="No tax" class="nextInputFocus">
+                    <small>client you want to send invoice</small>
+                 </div>
+              </div>
+              <div class="form-group">
+                 <label class="col-sm-2 control-label">Terms<span>*</span></label>
+                 <div class="col-sm-10">
+                     <select style="width: 100%;" name="term-id" data-placeholder="Select a payment type" formControlName="term-id">
                         <option value=""></option>
-                        <option *ngFor="let tax of taxData" value="{{tax.id}}">{{tax.name}}</option>
+                        <option *ngFor="let term of terms" value="{{term.id}}">{{term.title}}</option>
                      </select>
-                   </td>
-                   <td>
-                     <div class="item-cost"></div>
-                   </td>
-                </tr>
-                <template #clone>
-                    <tr class="ui-state-default">
-                       <td>
-                         <div class="icon-action">
-                          <a  href="javascript:void(0)" deleteSortable><img src="assets/images/close.png" alt=""></a>
-                          <a  href="javascript:void(0)"><img src="assets/images/sort.png" alt=""></a>
-                          </div>
-                       </td>
-                       <td>
-                           <select multiple="multiple" select2 style="width: 100%;" name="item-id" data-placeholder="Select an item" class="nextInputFocus">
-                              <option value=""></option>
-                              <option *ngFor="let item of items" value="{{item.id}}">{{item.title}}</option>
-                           </select>
-                      </td>
-                       <td><input type="text" name="item-description" value=""  class="form-control nextInputFocus" (triggerEventEmitter)="triggerEventEmitterAddRow()" itemDescription></td>
-                       <td><input type="text" name="item-unit-cost" [value]="defaultUnitPrice" itemUnitCost class="form-control nextInputFocus"></td>
-                       <td><input type="text" name="item-qty" itemQuantity (triggerEventEmitter)="triggerEventEmitterAddRow()" class="form-control nextInputFocus" [value]="defaultQuantity"></td>
-                       <td>
-                           <input type="text" name="item-discount" value="" class="form-control item-discount nextInputFocus" itemDiscount>
-                           <span class="discount-percent"></span>
-                       </td>
-                       <td>
-                         <select multiple="multiple" select2 style="width: 100%;" name="tax-id" data-placeholder="No tax" class="nextInputFocus">
-                            <option value=""></option>
-                            <option *ngFor="let tax of taxData" value="{{tax.id}}">{{tax.name}}</option>
-                         </select>
-                       </td>
-                       <td>
-                         <div class="item-cost"></div>
-                       </td>
-                    </tr>
-
-                </template>
-                <template #container></template>
-            </tbody>
-         </table>
-         <!--<pre>
-         {{invoiceFormData | json}}
-        </pre>-->
-      </div>
-      <a class="btn btn-primary line-btn" id="save-invoice" href="javascript:void(0)" (click)="cloneTemplate()">Add Line Item</a>
-   </div>
-   <div class="col-sm-7 col-md-8 col-xs-12">
-       <div class="message">
-         <div class="form-group">
-            <label for="">Notes</label>
-           <textarea  rows="3" class="form-control" [(ngModel)]="invoiceFormData.notes"></textarea>
-         </div>
-       </div>
-   </div>
-   <div class="col-sm-5 col-md-4  col-xs-12float-right">
-     <div class="gridsummary-table">
-       <ul>
-        <li>
-             <div class="discount">
-                Discount
-             </div>
-             <input type="text" class="form-control" name="" id="discount-value" readonly value="0">
-        </li>
-        <li>
-             <div class="discount">
-                Tax
-             </div>
-             <input type="text" class="form-control" name="" id="tax-value" readonly value="0">
-        </li>
-         <li>
-           <div class="net-total">
-           <strong>Net total</strong>
-             <span id="item-net-total">$0.00</span>
+                    <small>client you want to send invoice</small>
+                 </div>
+              </div>
            </div>
-         </li>
-       </ul>
-     </div>
-   </div>
+           <div class="col-sm-5 form-horizontal">
+              <div class="form-group">
+                 <label class="col-sm-4 control-label">Invoice #<span>*</span></label>
+                 <div class="col-sm-8">
+                     <input type="text" class="form-control"  placeholder="" formControlName="invoiceNumber" readonly [value]="invoiceFormData.invoiceNumber" #invoiceNumber>
+                    <small>Auto Generated</small>
+                 </div>
+              </div>
+              <div class="form-group">
+                 <label class="col-sm-4 control-label">Invoice Date<span>*</span></label>
+                 <div class="col-sm-8">
+                    <input type="text" class="form-control"  placeholder="" invoiceDatepicker formControlName="invoiceDate" #invoiceDate>
+                 </div>
+              </div>
+              <div class="form-group">
+                 <label class="col-sm-4 control-label">Due date<span>*</span></label>
+                 <div class="col-sm-8">
+                    <input type="text" class="form-control" name="due-date" formControlName="due-date"  placeholder="" invoiceDatepicker #invoiceDueDate>
+                 </div>
+              </div>
+           </div>
+           <div class="billing-item-section">
+               <div class="col-sm-12">
 
-</div>
-<div class="btn-content text-center">
-    <button (click)="saveInvoiceData()" class="btn btn-primary">Save</button>
+                  <div class="table-responsive" select2Keypress>
+                     <table class="table">
+                        <thead>
+                           <tr>
+                              <th>&nbsp;</th>
+                              <th width="110">Item</th>
+                              <th width="250">Description</th>
+                              <th width="80">Unit Cost</th>
+                              <th width="70">Qty</th>
+                              <th width="130">Discount</th>
+                              <th width="105">Tax</th>
+                              <th>Line Total</th>
+                           </tr>
+                        </thead>
+                        <tbody id="sortable" class="invoice-items" sortable formArrayName="items">
+                            <tr class="ui-state-default" *ngFor="let item of invoiceForm.controls.items.controls; let i = index">
+                               <td >
+                                 <div class="icon-action">
+                                  <a  href="javascript:void(0)" deleteSortable><img src="assets/images/close.png" alt=""></a>
+                                  <a  href="javascript:void(0)"><img src="assets/images/sort.png" alt=""></a>
+                                  </div>
+                               </td>
+                               <td [formGroupName]="i">
+                                 <select style="width: 100%;" name="item-id" formControlName="itemId" data-placeholder="Select an item" class="nextInputFocus">
+                                    <option value=""></option>
+                                    <option *ngFor="let item of items" value="{{item.id}}">{{item.title}}</option>
+                                 </select>
+
+                              </td>
+                               <td [formGroupName]="i"><input type="text" name="item-description" formControlName="itemDescription" value="" class="form-control nextInputFocus" itemDescription (triggerEventEmitter)="triggerEventEmitterAddRow()"></td>
+                               <td [formGroupName]="i"><input type="text" name="item-unit-cost" formControlName="itemUnitCost" [value]="defaultUnitPrice" itemUnitCost class="form-control nextInputFocus"></td>
+                               <td [formGroupName]="i"><input type="text" name="item-qty" formControlName="itemQty" itemQuantity (triggerEventEmitter)="triggerEventEmitterAddRow()" class="form-control nextInputFocus" [value]="defaultQuantity"></td>
+                               <td [formGroupName]="i">
+                                   <input type="text" name="item-discount" value="" formControlName="itemDiscount" class="form-control item-discount nextInputFocus" itemDiscount>
+                                   <span class="discount-percent"></span>
+                               </td>
+                               <td>
+                                 <select [formGroupName]="i"  style="width: 100%;" formControlName="" name="tax-id" data-placeholder="No tax" class="nextInputFocus">
+                                    <option value=""></option>
+                                    <option *ngFor="let tax of taxData" value="{{tax.id}}">{{tax.name}}</option>
+                                 </select>
+                               </td>
+                               <td>
+                                 <div class="item-cost"></div>
+                               </td>
+                            </tr>
+
+
+                        </tbody>
+                     </table>
+
+                  </div>
+                  <a class="btn btn-primary line-btn" id="save-invoice" href="javascript:void(0)" (click)="addMoreItem()">Add Line Item</a>
+               </div>
+               <div class="col-sm-7 col-md-8 col-xs-12">
+                   <div class="message">
+                     <div class="form-group">
+                        <label for="">Notes</label>
+                       <textarea  rows="3" class="form-control" ></textarea>
+                     </div>
+                   </div>
+               </div>
+               <div class="col-sm-5 col-md-4  col-xs-12float-right">
+                 <div class="gridsummary-table">
+                   <ul>
+                    <li>
+                         <div class="discount">
+                            Discount
+                         </div>
+                         <input type="text" class="form-control" name="" id="discount-value" readonly value="0">
+                    </li>
+                    <li>
+                         <div class="discount">
+                            Tax
+                         </div>
+                         <input type="text" class="form-control" name="" id="tax-value" readonly value="0">
+                    </li>
+                     <li>
+                       <div class="net-total">
+                       <strong>Net total</strong>
+                         <span id="item-net-total">$0.00</span>
+                       </div>
+                     </li>
+                   </ul>
+                 </div>
+               </div>
+           </div>
+           <div class="btn-content text-center col-sm-12">
+               <button type="submit" class="btn btn-primary">Save</button>
+           </div>
+       </form>
 </div>

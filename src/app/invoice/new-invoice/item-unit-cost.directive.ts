@@ -11,8 +11,8 @@ export class ItemUnitCostDirective implements OnInit {
     constructor(elementRef: ElementRef, private calculateService: CalculateService) {
         this.elementRef = elementRef;
         jQuery(this.elementRef.nativeElement).on('blur', function(){
-            //console.log(accounting.formatMoney(jQuery(this).val()));
-            var unitCost = accounting.formatMoney(jQuery(this).val());
+            //console.log(accounting.formatNumber(jQuery(this).val()));
+            var unitCost = accounting.formatNumber(jQuery(this).val());
             jQuery(this).val(unitCost);
         });
         jQuery(this.elementRef.nativeElement).on('keyup', function(){
@@ -54,7 +54,7 @@ export class ItemUnitCostDirective implements OnInit {
                 totalCost = parseFloat(totalCost) + parseFloat(rowCost);
 
             });
-            totalCost = accounting.formatMoney(totalCost);
+            totalCost = accounting.formatNumber(totalCost);
             jQuery("#item-net-total").html(totalCost);
 
             /* Total tax calculation */
@@ -72,7 +72,7 @@ export class ItemUnitCostDirective implements OnInit {
             if(isNaN(totalTax)){
                 totalTax = 0;
             }
-            totalTax = accounting.formatMoney(totalTax);
+            totalTax = accounting.formatNumber(totalTax);
             jQuery('#tax-value').val(totalTax);
         });
     }
