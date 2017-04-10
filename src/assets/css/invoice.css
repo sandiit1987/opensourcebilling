@@ -112,7 +112,7 @@ input[name=item-unit-cost], input[name=item-cost], input[name=item-qty], input[n
 }
 .discount-percent{
     display: inline-block;
-    width: 60px;
+    width: 55px;
     float: right;
     padding: 6px 0;
 }

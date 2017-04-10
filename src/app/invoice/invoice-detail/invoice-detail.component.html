@@ -127,18 +127,18 @@
                 <div class="discount">
                    Discount
                 </div>
-                <input type="text" class="form-control" name="" id="discount-value" readonly value="{{invoiceData.discountValue}}">
+                <span>{{invoiceData.totalDiscount}}</span>
            </li>
            <li>
                 <div class="discount">
                    Tax
                 </div>
-                <input type="text" class="form-control" name="" id="tax-value" readonly value="{{invoiceData.taxValue}}">
+                <span>{{invoiceData.totalTax}}</span>
            </li>
          <li>
            <div class="net-total">
            <strong>Net total</strong>
-             <span id="item-net-total">{{invoiceData.netTotal}}</span>
+             <span>{{invoiceData.totalAmount}}</span>
            </div>
          </li>
       </ul>
@@ -146,3 +146,6 @@
 </div>
 
 </div>
+<!--<pre>
+{{invoiceData | json}}
+</pre>-->
